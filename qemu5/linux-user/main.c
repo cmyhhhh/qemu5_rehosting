@@ -367,7 +367,7 @@ static void handle_arg_hacksysinfo(const char *arg)
 
 static void handle_arg_pconly(const char *arg)
 {
-    // fprintf(stderr, "[GreenHouseQEMU] handle_arg_pconly\n");
+    // fprintf(stderr, "[FirmAgentQEMU] handle_arg_pconly\n");
     program_code_only = 1;
 }
 // GREENHOUSE PATCH END
@@ -911,6 +911,7 @@ int main(int argc, char **argv, char **envp)
     signal_init();
     
     // GREENHOUSE PATCH
+    // 当 program_code_only 为 1 时，设置 TCG 指令过滤器，只记录程序代码段的执行，过滤掉库函数、系统调用等非程序代码
     if (program_code_only == 1) {
         memset(filter_buf, 0, 512);
         snprintf(filter_buf, 512, "0x%lx..0x%lx", (unsigned long)info->start_code, (unsigned long)info->end_code);

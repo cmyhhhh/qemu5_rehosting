@@ -537,7 +537,7 @@ static int fatal_signal (int sig)
 /* returns 1 if given signal should dump core if not handled */
 static int core_dump_signal(int sig)
 {
-    fprintf(stderr, "[GreenHouseQEMU] SIG %d\n", sig);
+    fprintf(stderr, "[FirmAgentQEMU] SIG %d\n", sig);
     switch (sig) {
     case TARGET_SIGABRT:
     case TARGET_SIGFPE:
@@ -696,7 +696,7 @@ void cpu_loop_exit_sigsegv(CPUState *cpu, target_ulong addr,
 {
     const struct TCGCPUOps *tcg_ops = CPU_GET_CLASS(cpu)->tcg_ops;
     FILE* sigfile;
-    fprintf(stderr, "[GreenHouseQEMU] SIGSEGV CAUGHT!\n");
+    fprintf(stderr, "[FirmAgentQEMU] SIGSEGV CAUGHT!\n");
     sigfile = fopen("/SIGSEGV_HAPPENED", "w+");
     fprintf(sigfile, "SIGFILE\n");
     fclose(sigfile);

@@ -567,6 +567,7 @@ static void parse_ghpath(const char* pathname, char* redirected_path) {
     char rpath[PATH_MAX+1];
 
     memset(rpath, 0, PATH_MAX+1);
+    // /proc/和/dev/下路径重定向访问, 如 /proc/cpuinfo → /faproc/cpuinfo
     if (hackproc) {
         result = realpath(pathname, rpath);
         if (result == NULL) {
@@ -575,11 +576,11 @@ static void parse_ghpath(const char* pathname, char* redirected_path) {
         }
 
         if (strncmp(rpath, "/proc/", 6) == 0) {
-            snprintf(redirected_path, PATH_MAX, "/ghproc/%s", rpath+6);
+            snprintf(redirected_path, PATH_MAX, "/faproc/%s", rpath+6);
             return;
         }
         else if (strncmp(rpath, "/dev/", 5) == 0) {
-            snprintf(redirected_path, PATH_MAX, "/ghdev/%s", rpath+5);
+            snprintf(redirected_path, PATH_MAX, "/fadev/%s", rpath+5);
             return;
         }
     }
@@ -2216,6 +2217,7 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
             ret = get_errno(setsockopt(sockfd, level, optname,
                                        &val, sizeof(val)));
             // GREENHOUSE PATCH
+            // 当 setsockopt 调用失败时，强制返回成功（0）以避免某些网络配置问题
             if (hackbind && ret != 0) {
                  fprintf(stderr, "[qemu] Forcing setsockopt to return 0 even in failure cases [setsockopt(%d, %d, %d) = %d]\n", sockfd, level, optname, ret);
                  ret = 0;
@@ -2414,7 +2416,7 @@ set_timeout:
 		}
 		dev_ifname = lock_user(VERIFY_READ, optval_addr, optlen, 1);
         /* GREENHOUSE PATCH */
-        fprintf(stderr, "[GreenHouseQEMU] BIND_DEVICE: %s\n", dev_ifname);
+        fprintf(stderr, "[FirmAgentQEMU] BIND_DEVICE: %s\n", dev_ifname);
         /* PATCH END */
 		if (!dev_ifname) {
 		    return -TARGET_EFAULT;
@@ -3179,6 +3181,7 @@ static abi_long do_socket(int domain, int type, int protocol)
     }
 
     /* GREENHOUSE PATCH */
+    // 在 hackbind 模式下，将所有 IPv6 网络流量都视为 IPv4 流量
     if (hackbind && domain == AF_INET6) {
         // handle all ipv6 networking as ipv4
         domain = AF_INET;
@@ -3262,12 +3265,13 @@ static abi_long do_bind(int sockfd, abi_ulong target_addr,
         return ret;
 
     /* GREENHOUSE PATCH */
+    // 当 hackbind 模式下，将所有 IPv6 绑定地址都强制转换为 IPv4 地址 0.0.0.0
     if (hackbind) {
         if(((struct sockaddr*)addr)->sa_family == AF_INET) {
             inet_ntop(AF_INET, &((struct sockaddr_in*)addr)->sin_addr, ip, sizeof(ip));
             port = ntohs(((struct sockaddr_in*)addr)->sin_port);
-            fprintf(stderr, "[GreenHouseQEMU] IP: %s\n", ip);
-            fprintf(stderr, "[GreenHouseQEMU] PORT: %hu\n", port);
+            fprintf(stderr, "[FirmAgentQEMU] IP: %s\n", ip);
+            fprintf(stderr, "[FirmAgentQEMU] PORT: %hu\n", port);
         }
         else if (((struct sockaddr*)addr)->sa_family == AF_INET6) {
             cust_addr = alloca(sizeof(struct sockaddr_in));
@@ -3284,8 +3288,8 @@ static abi_long do_bind(int sockfd, abi_ulong target_addr,
             ((struct sockaddr_in*)cust_addr)->sin_family = AF_INET;
             addr = cust_addr;
             addrlen = sizeof(struct sockaddr_in);
-            fprintf(stderr, "[GreenHouseQEMU] IPV6: 0.0.0.0\n");
-            fprintf(stderr, "[GreenHouseQEMU] IPV6_PORT: %hu\n", (unsigned short)ntohs(((struct sockaddr_in*)addr)->sin_port));
+            fprintf(stderr, "[FirmAgentQEMU] IPV6: 0.0.0.0\n");
+            fprintf(stderr, "[FirmAgentQEMU] IPV6_PORT: %hu\n", (unsigned short)ntohs(((struct sockaddr_in*)addr)->sin_port));
         }
 
         /* GREENHOUSE PATCH */
@@ -3360,8 +3364,8 @@ static abi_long do_connect(int sockfd, abi_ulong target_addr,
     if(((struct sockaddr*)addr)->sa_family == AF_INET) {
       inet_ntop(AF_INET, &((struct sockaddr_in*)addr)->sin_addr, ip, sizeof(ip));
       port = ntohs(((struct sockaddr_in*)addr)->sin_port);
-      fprintf(stderr, "[GreenHouseQEMU] IP-CONNECT: %s\n", ip);
-      fprintf(stderr, "[GreenHouseQEMU] PORT-CONNECT: %hu\n", port);
+      fprintf(stderr, "[FirmAgentQEMU] IP-CONNECT: %s\n", ip);
+      fprintf(stderr, "[FirmAgentQEMU] PORT-CONNECT: %hu\n", port);
 
     }
 
@@ -8362,13 +8366,46 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
 #define BINPRM_BUF_SIZE 128
 
 /* GREENHOUSE_PATCH */
+/**
+    chroot . /qemu-mips -execve "/qemu-mips-static" /bin/sh /test.sh
+    [qemu] doing qemu_execven on filename /bin/echo
+    - arg echo
+    - arg 1
+    offset 5 argc 2 tokCount 0
+    Original args
+    - argv echo
+    - argv 1
+    - arg /qemu-mips-static
+    - arg -0
+    - arg echo
+    - arg -execve
+    - arg /qemu-mips-static
+    - arg /bin/echo
+    - arg 1
+    1
+    [qemu] doing qemu_execven on filename /test2.sh
+    - arg /test2.sh
+    offset 6 argc 1 tokCount 0
+    Original args
+    - argv /test2.sh
+    interpreter name: /bin/sh
+    - arg /qemu-mips-static
+    - arg -0
+    - arg /bin/sh
+    - arg -execve
+    - arg /qemu-mips-static
+    - arg /bin/sh
+    - arg /test2.sh
+    [qemu] doing qemu_execven on filename /bin/echo
+    2
+*/
 /* qemu_execve() Must return target values and target errnos. */
 static abi_long qemu_execve(char *filename, char *argv[],
                   char *envp[])
 {
     char *i_arg = NULL, *i_name = NULL;
     char **new_argp;
-    int argc, fd, ret, i, offset = 3;
+    int argc, fd, ret, i, offset = 3; // offset是最后预留给execve要执行的程序之前的空间，用于设置qemu参数, 3个参数：qemu -0 <应用名>
     int tokCount = 0;
     int trace_count = 0;
     char *cp;
@@ -8431,6 +8468,7 @@ static abi_long qemu_execve(char *filename, char *argv[],
         if (*cp == '\0') {
             return -ENOEXEC; /* No interpreter name found */
         }
+        // 找到执行程序名称i_name，继续查找其参数i_arg
         i_name = cp;
         i_arg = NULL;
         for ( ; *cp && (*cp != ' ') && (*cp != '\t'); cp++) {
@@ -8444,21 +8482,21 @@ static abi_long qemu_execve(char *filename, char *argv[],
         }
 
         if (i_arg) {
-            offset = 5;
+            offset = 5; // 在执行前加上执行器和参数
         } else {
-            offset = 4;
+            offset = 4; // 在执行前加上执行器
         }
     }
 
-    qemu_path_tokens = strdup(qemu_execve_path);
-    token = strtok(qemu_path_tokens, " ");
-    qemu_path = strdup(token);
-    token = strtok(NULL, " ");
-    while (token != NULL) {
+    qemu_path_tokens = strdup(qemu_execve_path); // 复制一份-execve后面跟着的参数
+    token = strtok(qemu_path_tokens, " "); // 分割字符串，取出一个参数使用
+    qemu_path = strdup(token); // 第一个参数是qemu所在位置
+    token = strtok(NULL, " "); // 取出下一个参数
+    while (token != NULL) { // 统计除qemu外的参数
         token = strtok(NULL, " ");
         tokCount += 1;
     }
-    offset += 2 + tokCount;
+    offset += 2 + tokCount; // 加上-execve需要的offset
 
     // fprintf(stderr, "offset %d argc %d tokCount %d\n", offset, argc, tokCount);
     // fprintf(stderr, "Original args\n");
@@ -8483,15 +8521,15 @@ static abi_long qemu_execve(char *filename, char *argv[],
 
     qemu_path_tokens = strdup(qemu_execve_path);
     token = strtok(qemu_path_tokens, " ");
-    while (tokCount > 0 && token != NULL) {
+    while (tokCount > 0 && token != NULL) { // 处理-execve后面跟着的参数
         token = strtok(NULL, " ");
-        if(strstr(token, "trace.log") != NULL) {
+        if(strstr(token, "trace.log") != NULL) { // 查看trace.logX是否被使用，每个execve都会在之前X基础上+1
             do {
             trace_count += 1;
             memset(tBuf, 0, 100);
             snprintf(tBuf, 90, "%s%d", token, trace_count);
             } while( access( tBuf, F_OK ) == 0 );
-            new_argp[offset - 2 - tokCount] = strdup(tBuf);
+            new_argp[offset - 2 - tokCount] = strdup(tBuf); // -2是为了预留-execve “...”两个参数的空间
         }
         else {
             new_argp[offset - 2 - tokCount] = strdup(token);
@@ -10443,6 +10481,7 @@ static abi_long do_syscall1(void *cpu_env, int num, abi_long arg1,
                     return -TARGET_EFAULT;
                 __put_user(value.uptime, &target_value->uptime);
                 // GREENHOUSE PATCH
+                // 当 hacksysinfo 为 1 时，清零1分钟、5分钟、15分钟的平均负载信息,负载过高可能触发不必要的告警
                 if (hacksysinfo) {
                     __put_user(0, &target_value->loads[0]);
                     __put_user(0, &target_value->loads[1]);
