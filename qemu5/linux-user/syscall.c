@@ -8524,12 +8524,97 @@ static abi_long qemu_execve(char *filename, char *argv[],
     while (tokCount > 0 && token != NULL) { // 处理-execve后面跟着的参数
         token = strtok(NULL, " ");
         if(strstr(token, "trace.log") != NULL) { // 查看trace.logX是否被使用，每个execve都会在之前X基础上+1
-            do {
-            trace_count += 1;
-            memset(tBuf, 0, 100);
-            snprintf(tBuf, 90, "%s%d", token, trace_count);
-            } while( access( tBuf, F_OK ) == 0 );
-            new_argp[offset - 2 - tokCount] = strdup(tBuf); // -2是为了预留-execve “...”两个参数的空间
+            // 基础Linux命令黑名单，不需要产生日志
+            static const char *blacklist[] = {
+                "bash", "sh", "dash", "zsh", "csh",
+                "ls", "cat", "echo", "cp", "mv", "rm", "mkdir", "rmdir",
+                "cd", "pwd", "grep", "sed", "awk", "head", "tail",
+                "ps", "top", "kill", "chmod", "chown", "chgrp",
+                "touch", "ln", "find", "xargs", "cut", "sort", "uniq",
+                "wc", "diff", "patch", "tar", "gzip", "gunzip", "zip", "unzip",
+                "date", "time", "sleep", "true", "false", "exit", "[", "[[",
+                /* Network commands */
+                "ifconfig", "ip", "route", "ping", "traceroute", "netstat", "arp", "iptables",
+                "telnet", "ssh", "scp", "iwconfig", "iw", "wget", "curl", "nslookup", "dig", "ss", "tc",
+                "ifup", "ifdown", "vconfig", "bridge", "iproute", "netcat", "nc", "tftp", "ftp",
+                /* Wireless commands */
+                "iwlist", "iwlistscan", "wpa_cli", "wpa_supplicant", "hostapd", "airmon-ng", "airodump-ng",
+                /* System management commands */
+                "mount", "umount", "df", "du", "free", "uptime", "uname", "hostname", "poweroff",
+                "nice", "renice", "shutdown", "reboot", "sysctl", "passwd", "chpasswd", "sysinfo",
+                /* File system commands */
+                "fsck", "mkfs", "mke2fs", "mountpoint", "dd", "cpio", "mksquashfs", "unsquashfs", "mkfs.ext3", "mkfs.ext4",
+                /* Process management commands */
+                "killall", "pgrep", "pkill", "pidof", "nohup", "bg", "fg", "jobs",
+                /* Text editors */
+                "vi", "vim", "nano", "ed", "emacs", "less", "more",
+                /* Package management commands (common in embedded systems) */
+                "opkg", "ipkg", "pkg_add", "pkg_info",
+                /* Router-specific commands */
+                "uci", "nmcli", "networkctl",
+                /* System monitoring commands */
+                "htop", "mpstat", "vmstat", "iostat", "sar", "lsof", "tcpdump",
+                /* Security commands */
+                "openssl", "md5sum", "sha1sum", "sha256sum", "sha512sum",
+                /* Time synchronization commands */
+                "ntpdate", "chronyd", "ntpd", "rdate",
+                /* Compression tools */
+                "xz", "bzip2", "lbzip2", "lzma", "lzip", "zstd",
+                /* Other common commands */
+                "clear", "history", "which", "whereis", "whoami", "id", "su", "sudo", "reset", "tty",
+                "od", "hexdump", "xxd", "stat", "file", "lshw", "lscpu", "sync", "mdadm", "ntfs-3g",
+                /* BusyBox */
+                "busybox"
+            };
+            
+            // 初始化哈希表（只执行一次）
+            static GHashTable *blacklist_set = NULL;
+            if (blacklist_set == NULL) {
+                blacklist_set = g_hash_table_new(g_str_hash, g_str_equal);
+                for (int i = 0; i < sizeof(blacklist) / sizeof(blacklist[0]); i++) {
+                    g_hash_table_insert(blacklist_set, (gpointer)blacklist[i], NULL);
+                }
+            }
+            
+            // 从filename中提取应用名（不含路径）
+            char *app_name = strrchr(filename, '/');
+            if (app_name == NULL) {
+                app_name = filename; // 如果没有路径分隔符，整个filename就是应用名
+            } else {
+                app_name++; // 跳过路径分隔符
+            }
+            
+            // 检查应用名是否在黑名单中
+            int is_blacklisted = g_hash_table_contains(blacklist_set, app_name);
+            
+            if (is_blacklisted) {
+                // 如果是黑名单中的命令，使用空字符串代替NULL，保持参数列表完整性
+                new_argp[offset - 2 - tokCount] = strdup("");
+                new_argp[offset - 2 - tokCount - 1] = strdup("");
+            } else {
+                // 复制应用名并将所有点号(.)替换为下划线(_)
+                char sanitized_app_name[100];
+                strncpy(sanitized_app_name, app_name, sizeof(sanitized_app_name) - 1);
+                sanitized_app_name[sizeof(sanitized_app_name) - 1] = '\0'; // 确保字符串终止
+                
+                // 替换所有点号为下划线
+                for (int i = 0; sanitized_app_name[i] != '\0'; i++) {
+                    if (sanitized_app_name[i] == '.') {
+                        sanitized_app_name[i] = '_';
+                    }
+                }
+                
+                // 创建新的日志文件名格式：<应用名>_trace.log
+                char base_log_name[200];
+                snprintf(base_log_name, sizeof(base_log_name), "%s_trace.log", sanitized_app_name);
+                
+                do {
+                    trace_count += 1;
+                    memset(tBuf, 0, 100);
+                    snprintf(tBuf, 90, "%s%d", base_log_name, trace_count);
+                } while( access( tBuf, F_OK ) == 0 );
+                new_argp[offset - 2 - tokCount] = strdup(tBuf); // -2是为了预留-execve “...”两个参数的空间
+            }
         }
         else {
             new_argp[offset - 2 - tokCount] = strdup(token);
@@ -8552,6 +8637,22 @@ static abi_long qemu_execve(char *filename, char *argv[],
 
     new_argp[offset] = filename;
     new_argp[argc + offset] = NULL;
+
+    // 检测并移除空字符串参数，将后面的参数向前移动
+    int src = 0, dst = 0;
+    while (new_argp[src] != NULL) {
+        if (strcmp(new_argp[src], "") != 0) {
+            if (src != dst) {
+                new_argp[dst] = new_argp[src];
+            }
+            dst++;
+        } else {
+            // 释放空字符串的内存
+            free(new_argp[src]);
+        }
+        src++;
+    }
+    new_argp[dst] = NULL;
 
     // fprintf(stderr, "[qemu] qemu_execve_path %s new_arg\n", qemu_execve_path);
     // for (argc = 0; new_argp[argc] != NULL; argc++) {
