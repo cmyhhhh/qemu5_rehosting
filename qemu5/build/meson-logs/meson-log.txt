@@ -1,17 +1,37 @@
-Build started at 2023-08-04T11:31:00.750202
+Build started at 2025-12-10T20:16:08.120270
 Main binary: /usr/bin/python3
-Build Options: -Daudio_drv_list=default -Ddefault_devices=true -Ddocdir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/doc -Dqemu_firmwarepath=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/qemu-firmware -Dqemu_suffix=qemu -Dsphinx_build= -Dtrace_file=trace -Doptimization=2 -Ddebug=true -Dwerror=false -Dstrip=true -Db_pie=true -Db_coverage=false -Db_lto=false -Dcfi=false -Dtcg=enabled -Dxen=disabled -Dcapstone=auto -Dfdt=auto -Dslirp=auto -Dprefix=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static -Dbindir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/bin -Ddatadir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share -Dincludedir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/include -Dlibdir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/lib -Dlibexecdir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/libexec -Dlocaledir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/locale -Dlocalstatedir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/var -Dmandir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/man -Dsysconfdir=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/etc -Dbackend=ninja
+Build Options: -Daudio_drv_list=default -Ddefault_devices=true -Ddocdir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/doc -Dqemu_firmwarepath=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/qemu-firmware -Dqemu_suffix=qemu -Dsphinx_build= -Dtrace_file=trace -Doptimization=2 -Ddebug=true -Dwerror=false -Dstrip=true -Db_pie=true -Db_coverage=false -Db_lto=false -Dcfi=false -Dtcg=enabled -Dxen=disabled -Dcapstone=auto -Dfdt=auto -Dslirp=auto -Dprefix=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static -Dbindir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/bin -Ddatadir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share -Dincludedir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/include -Dlibdir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/lib -Dlibexecdir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/libexec -Dlocaledir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/locale -Dlocalstatedir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/var -Dmandir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/man -Dsysconfdir=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/etc '--native-file config-meson.cross'
 Python system: Linux
 The Meson build system
 Version: 0.59.3
-Source dir: /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5
-Build dir: /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build
+Source dir: /home/cmy/rehosting/qemu5_rehosting/qemu5
+Build dir: /home/cmy/rehosting/qemu5_rehosting/qemu5/build
 Build type: native build
 Project name: qemu
 Project version: 6.1.90
-C compiler for the host machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
+Sanity testing C compiler: cc -m64 -mcx16
+Is cross compiler: False.
+Sanity check compiler command line: cc -m64 -mcx16 sanitycheckc.c -o sanitycheckc.exe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/sanitycheckc.exe
+C compiler for the host machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0")
 C linker for the host machine: cc -m64 -mcx16 ld.bfd 2.34
-C compiler for the build machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
+Sanity testing C compiler: cc -m64 -mcx16
+Is cross compiler: False.
+Sanity check compiler command line: cc -m64 -mcx16 sanitycheckc.c -o sanitycheckc.exe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/sanitycheckc.exe
+C compiler for the build machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0")
 C linker for the build machine: cc -m64 -mcx16 ld.bfd 2.34
 Build machine cpu family: x86_64
 Build machine cpu: x86_64
@@ -22,12 +42,22 @@ Target machine cpu: x86_64
 Program sh found: YES (/usr/bin/sh)
 Program python3 found: YES (/usr/bin/python3)
 WARNING: Broken python installation detected. Python files installed by Meson might not be found by python interpreter.
-C++ compiler for the host machine: c++ -m64 -mcx16 (gcc 9.4.0 "c++ (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
+Sanity testing C++ compiler: c++ -m64 -mcx16
+Is cross compiler: False.
+Sanity check compiler command line: c++ -m64 -mcx16 sanitycheckcpp.cc -o sanitycheckcpp.exe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/sanitycheckcpp.exe
+C++ compiler for the host machine: c++ -m64 -mcx16 (gcc 9.4.0 "c++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0")
 C++ linker for the host machine: c++ -m64 -mcx16 ld.bfd 2.34
 Program cgcc found: NO
 Running compile:
-Working directory:  /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp9ndjia2c
-Command line:  cc -m64 -mcx16 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp9ndjia2c/testfile.c -o /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp9ndjia2c/output.exe -D_FILE_OFFSET_BITS=64 -O0 -Wl,--start-group -lm -Wl,--end-group -Wl,--allow-shlib-undefined 
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp5r14oucp
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp5r14oucp/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp5r14oucp/output.exe -D_FILE_OFFSET_BITS=64 -O0 -Wl,--start-group -lm -Wl,--end-group -Wl,--allow-shlib-undefined 
 
 Code:
  int main(void) { return 0; }
@@ -37,10 +67,10 @@ Compiler stdout:
 Compiler stderr:
  
 Library m found: YES
-Dependency threads found: YES unknown (cached)
+Run-time dependency threads found: YES
 Running compile:
-Working directory:  /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp2phucnb7
-Command line:  cc -m64 -mcx16 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp2phucnb7/testfile.c -o /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp2phucnb7/output.exe -D_FILE_OFFSET_BITS=64 -O0 -Wl,--start-group -lutil -Wl,--end-group -Wl,--allow-shlib-undefined 
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp07fmepeb
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp07fmepeb/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp07fmepeb/output.exe -D_FILE_OFFSET_BITS=64 -O0 -Wl,--start-group -lutil -Wl,--end-group -Wl,--allow-shlib-undefined 
 
 Code:
  int main(void) { return 0; }
@@ -51,9 +81,62 @@ Compiler stderr:
  
 Library util found: YES
 Run-time dependency appleframeworks found: NO (tried framework)
-Dependency zlib found: YES 1.2.11 (cached)
-Using cached compile:
-Cached command line:   
+Pkg-config binary for MachineChoice.HOST is not cached.
+Pkg-config binary for 1 specified from cross file, native file, or env var as ['pkg-config']
+Found pkg-config: /usr/bin/pkg-config (1.6.3)
+Determining dependency 'zlib' with pkg-config executable '/usr/bin/pkg-config'
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
+Called `/usr/bin/pkg-config --modversion zlib` -> 0
+1.2.11
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
+Called `/usr/bin/pkg-config --cflags zlib` -> 0
+
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
+env[PKG_CONFIG_ALLOW_SYSTEM_LIBS]: 1
+Called `/usr/bin/pkg-config --libs --static zlib` -> 0
+-L/usr/lib/x86_64-linux-gnu -lz
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
+Called `/usr/bin/pkg-config --libs --static zlib` -> 0
+-L/usr/lib/x86_64-linux-gnu -lz
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmps341p29b
+Command line:  c++ -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmps341p29b/testfile.cpp -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmps341p29b/output.exe -D_FILE_OFFSET_BITS=64 -O0 -fpermissive 
+
+Code:
+ #include<stdio.h>
+        
+        int main(void) {
+            printf("%ld\n", (long)(sizeof(void *)));
+            return 0;
+        };
+Compiler stdout:
+ 
+Compiler stderr:
+ 
+Program stdout:
+
+8
+
+Program stderr:
+
+
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp4_wyfyy6
+Command line:  c++ -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp4_wyfyy6/testfile.cpp -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp4_wyfyy6/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+
+Code:
+ 
+Compiler stdout:
+ install: /usr/lib/gcc/x86_64-linux-gnu/9/
+programs: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/
+libraries: =./x86_64-linux-gnu/9/:./x86_64-linux-gnu/:./../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:./:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
+
+Compiler stderr:
+ 
+Run-time dependency zlib found: YES 1.2.11
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0ijneoyu
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0ijneoyu/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0ijneoyu/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -65,14 +148,14 @@ Code:
   #include <sys/xattr.h>
   #endif
   int main(void) { getxattr(NULL, NULL, NULL, 0); setxattr(NULL, NULL, NULL, 0, 0); return 0; }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
 Run-time dependency appleframeworks found: NO (tried framework)
 Running compile:
-Working directory:  /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpi_bmelq2
-Command line:  cc -m64 -mcx16 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpi_bmelq2/testfile.c -o /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpi_bmelq2/output.exe -D_FILE_OFFSET_BITS=64 -O0 -Wl,--start-group -lrt -Wl,--end-group -Wl,--allow-shlib-undefined 
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9m_n3cc3
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9m_n3cc3/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9m_n3cc3/output.exe -D_FILE_OFFSET_BITS=64 -O0 -Wl,--start-group -lrt -Wl,--end-group -Wl,--allow-shlib-undefined 
 
 Code:
  int main(void) { return 0; }
@@ -82,16 +165,15 @@ Compiler stdout:
 Compiler stderr:
  
 Library rt found: YES
-Pkg-config binary for MachineChoice.HOST is not cached.
-Pkg-config binary for 1 specified from cross file, native file, or env var as ['pkg-config']
-Found pkg-config: /usr/bin/pkg-config (0.29.1)
+Pkg-config binary for MachineChoice.HOST is cached.
 Determining dependency 'libkeyutils' with pkg-config executable '/usr/bin/pkg-config'
-env[PKG_CONFIG_PATH]: 
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
 Called `/usr/bin/pkg-config --modversion libkeyutils` -> 1
 
 Run-time dependency libkeyutils found: NO (tried pkgconfig)
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvmrdvrnk
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvmrdvrnk/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvmrdvrnk/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -112,23 +194,25 @@ Code:
         int main(void) {
           return gettid ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "gettid" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "gettid" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmm28t4hz
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmm28t4hz/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmm28t4hz/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  #include <malloc.h>
                 int main(void) { malloc_trim(0); return 0; }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpl7qg3gpz
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpl7qg3gpz/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpl7qg3gpz/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -142,24 +226,25 @@ Code:
     statx(0, "", 0, STATX_BASIC_STATS, &statxbuf);
     return 0;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
 Pkg-config binary for MachineChoice.HOST is cached.
 Determining dependency 'fuse3' with pkg-config executable '/usr/bin/pkg-config'
-env[PKG_CONFIG_PATH]: 
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
 Called `/usr/bin/pkg-config --modversion fuse3` -> 1
 
 Run-time dependency fuse3 found: NO (tried pkgconfig)
 Pkg-config binary for MachineChoice.HOST is cached.
 Determining dependency 'libbpf' with pkg-config executable '/usr/bin/pkg-config'
-env[PKG_CONFIG_PATH]: 
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
 Called `/usr/bin/pkg-config --modversion libbpf` -> 1
 
 Run-time dependency libbpf found: NO (tried pkgconfig)
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp049_6h4h
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp049_6h4h/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -170,13 +255,14 @@ Code:
         #else
          #include <sys/epoll.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Has header "sys/epoll.h" : YES (cached)
-Using cached compile:
-Cached command line:   
+Has header "sys/epoll.h" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp8b1z019x
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp8b1z019x/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -187,13 +273,14 @@ Code:
         #else
          #include <linux/magic.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Has header "linux/magic.h" : YES (cached)
-Using cached compile:
-Cached command line:   
+Has header "linux/magic.h" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp1t8pky1z
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp1t8pky1z/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -204,16 +291,14 @@ Code:
         #else
          #include <valgrind/valgrind.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp4rg2ml7v/testfile.c:4:12: error: #error "Header 'valgrind/valgrind.h' could not be found"
-    4 |           #error "Header 'valgrind/valgrind.h' could not be found"
-      |            ^~~~~
-
-Has header "valgrind/valgrind.h" : NO (cached)
-Using cached compile:
-Cached command line:   
+Compiler stderr:
+ 
+Has header "valgrind/valgrind.h" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkf_6arn_
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkf_6arn_/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -224,13 +309,14 @@ Code:
         #else
          #include <linux/btrfs.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Has header "linux/btrfs.h" : YES (cached)
-Using cached compile:
-Cached command line:   
+Has header "linux/btrfs.h" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp1k2y8g5m
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp1k2y8g5m/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -241,16 +327,17 @@ Code:
         #else
          #include <libdrm/drm.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpg8ki9ti3/testfile.c:4:12: error: #error "Header 'libdrm/drm.h' could not be found"
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp1k2y8g5m/testfile.c:4:12: error: #error "Header 'libdrm/drm.h' could not be found"
     4 |           #error "Header 'libdrm/drm.h' could not be found"
       |            ^~~~~
 
-Has header "libdrm/drm.h" : NO (cached)
-Using cached compile:
-Cached command line:   
+Has header "libdrm/drm.h" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpyp4k8da7
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpyp4k8da7/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -261,13 +348,14 @@ Code:
         #else
          #include <pty.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Has header "pty.h" : YES (cached)
-Using cached compile:
-Cached command line:   
+Has header "pty.h" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpiao3rlj0
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpiao3rlj0/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -278,16 +366,17 @@ Code:
         #else
          #include <sys/disk.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp2lmftol_/testfile.c:4:12: error: #error "Header 'sys/disk.h' could not be found"
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpiao3rlj0/testfile.c:4:12: error: #error "Header 'sys/disk.h' could not be found"
     4 |           #error "Header 'sys/disk.h' could not be found"
       |            ^~~~~
 
-Has header "sys/disk.h" : NO (cached)
-Using cached compile:
-Cached command line:   
+Has header "sys/disk.h" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmrkeryhj
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmrkeryhj/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -298,16 +387,17 @@ Code:
         #else
          #include <sys/ioccom.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpqgwcft1q/testfile.c:4:12: error: #error "Header 'sys/ioccom.h' could not be found"
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmrkeryhj/testfile.c:4:12: error: #error "Header 'sys/ioccom.h' could not be found"
     4 |           #error "Header 'sys/ioccom.h' could not be found"
       |            ^~~~~
 
-Has header "sys/ioccom.h" : NO (cached)
-Using cached compile:
-Cached command line:   
+Has header "sys/ioccom.h" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_x3j_sb7
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_x3j_sb7/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -318,16 +408,17 @@ Code:
         #else
          #include <sys/kcov.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmplf6hnt3g/testfile.c:4:12: error: #error "Header 'sys/kcov.h' could not be found"
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_x3j_sb7/testfile.c:4:12: error: #error "Header 'sys/kcov.h' could not be found"
     4 |           #error "Header 'sys/kcov.h' could not be found"
       |            ^~~~~
 
-Has header "sys/kcov.h" : NO (cached)
-Using cached compile:
-Cached command line:   
+Has header "sys/kcov.h" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvj8bxpvy
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvj8bxpvy/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvj8bxpvy/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -348,13 +439,14 @@ Code:
         int main(void) {
           return accept4 ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "accept4" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "accept4" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphdb0m8fo
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphdb0m8fo/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphdb0m8fo/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -375,13 +467,14 @@ Code:
         int main(void) {
           return clock_adjtime ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "clock_adjtime" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "clock_adjtime" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_8euvt65
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_8euvt65/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_8euvt65/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -402,13 +495,14 @@ Code:
         int main(void) {
           return dup3 ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "dup3" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "dup3" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplv8sy_14
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplv8sy_14/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplv8sy_14/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -429,13 +523,14 @@ Code:
         int main(void) {
           return fallocate ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "fallocate" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "fallocate" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp3cyp0rym
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp3cyp0rym/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp3cyp0rym/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -456,13 +551,14 @@ Code:
         int main(void) {
           return posix_fallocate ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "posix_fallocate" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "posix_fallocate" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpe96x93bw
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpe96x93bw/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpe96x93bw/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -483,16 +579,17 @@ Code:
         int main(void) {
           return posix_memalign ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmplaltgp2m/testfile.c:10:14: warning: conflicting types for built-in function 'posix_memalign'; expected 'int(void **, long unsigned int,  long unsigned int)' [-Wbuiltin-declaration-mismatch]
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpe96x93bw/testfile.c:10:14: warning: conflicting types for built-in function 'posix_memalign'; expected 'int(void **, long unsigned int,  long unsigned int)' [-Wbuiltin-declaration-mismatch]
    10 |         char posix_memalign (void);
       |              ^~~~~~~~~~~~~~
 
-Checking for function "posix_memalign" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "posix_memalign" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpw0zpp_t_
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpw0zpp_t_/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpw0zpp_t_/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -513,13 +610,14 @@ Code:
         int main(void) {
           return ppoll ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "ppoll" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "ppoll" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmptd172hd6
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmptd172hd6/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmptd172hd6/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  #include <sys/uio.h>
@@ -534,13 +632,14 @@ int main(void) {
             long long b = (long long) a;
             return (int) b;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "preadv" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "preadv" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvw5te7u7
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvw5te7u7/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvw5te7u7/output.exe -pthread -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -561,13 +660,14 @@ Code:
         int main(void) {
           return sem_timedwait ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "sem_timedwait" with dependency threads: YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "sem_timedwait" with dependency threads: YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0s5rw9jj
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0s5rw9jj/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0s5rw9jj/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -588,13 +688,14 @@ Code:
         int main(void) {
           return sendfile ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "sendfile" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "sendfile" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvv07xu7p
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvv07xu7p/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvv07xu7p/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -615,13 +716,14 @@ Code:
         int main(void) {
           return setns ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "setns" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "setns" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpumzcdadt
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpumzcdadt/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpumzcdadt/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -642,13 +744,14 @@ Code:
         int main(void) {
           return unshare ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "unshare" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "unshare" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkfnmgle8
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkfnmgle8/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkfnmgle8/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -669,13 +772,14 @@ Code:
         int main(void) {
           return syncfs ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "syncfs" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "syncfs" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpqzkl1dm1
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpqzkl1dm1/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpqzkl1dm1/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -696,13 +800,14 @@ Code:
         int main(void) {
           return sync_file_range ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "sync_file_range" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "sync_file_range" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp3q2z19oc
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp3q2z19oc/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp3q2z19oc/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -723,13 +828,14 @@ Code:
         int main(void) {
           return timerfd_create ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "timerfd_create" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "timerfd_create" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0c6zlc3r
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0c6zlc3r/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp0c6zlc3r/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -750,13 +856,14 @@ Code:
         int main(void) {
           return copy_file_range ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "copy_file_range" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "copy_file_range" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpz9ghphrl
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpz9ghphrl/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpz9ghphrl/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 -Wl,--start-group -lutil -Wl,--end-group 
 
 Code:
  
@@ -777,13 +884,14 @@ Code:
         int main(void) {
           return openpty ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "openpty" with dependency -lutil: YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "openpty" with dependency -lutil: YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpz3k2pkqz
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpz3k2pkqz/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpz3k2pkqz/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -804,13 +912,14 @@ Code:
         int main(void) {
           return strchrnul ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "strchrnul" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "strchrnul" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_w2hmy8l
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_w2hmy8l/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp_w2hmy8l/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  #include <stdlib.h>
@@ -825,13 +934,14 @@ int main(void) {
             long long b = (long long) a;
             return (int) b;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "system" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "system" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkdq3kw_f
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkdq3kw_f/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpkdq3kw_f/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -843,13 +953,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <byteswap.h> has symbol "bswap_32" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <byteswap.h> has symbol "bswap_32" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpordd7gp6
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpordd7gp6/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpordd7gp6/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -861,13 +972,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <sys/epoll.h> has symbol "epoll_create1" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <sys/epoll.h> has symbol "epoll_create1" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpdnukl729
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpdnukl729/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpdnukl729/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -883,13 +995,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <unistd.h> has symbol "environ" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <unistd.h> has symbol "environ" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp8rnbbh6t
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp8rnbbh6t/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp8rnbbh6t/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -901,13 +1014,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <linux/falloc.h> has symbol "FALLOC_FL_PUNCH_HOLE" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <linux/falloc.h> has symbol "FALLOC_FL_PUNCH_HOLE" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpqjbxgbag
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpqjbxgbag/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpqjbxgbag/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -919,13 +1033,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <linux/falloc.h> has symbol "FALLOC_FL_KEEP_SIZE" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <linux/falloc.h> has symbol "FALLOC_FL_KEEP_SIZE" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpt93lxgod
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpt93lxgod/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpt93lxgod/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -937,13 +1052,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <linux/falloc.h> has symbol "FALLOC_FL_ZERO_RANGE" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <linux/falloc.h> has symbol "FALLOC_FL_ZERO_RANGE" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpo832qjr2
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpo832qjr2/testfile.c -E -P -D_FILE_OFFSET_BITS=64 -P -O0 -std=gnu11 
 
 Code:
  
@@ -954,13 +1070,14 @@ Code:
         #else
          #include <linux/fiemap.h>
         #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Has header "linux/fiemap.h" : YES (cached)
-Using cached compile:
-Cached command line:   
+Has header "linux/fiemap.h" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvt8dpigf
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvt8dpigf/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvt8dpigf/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -972,13 +1089,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <linux/fs.h> has symbol "FS_IOC_FIEMAP" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <linux/fs.h> has symbol "FS_IOC_FIEMAP" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp2i6z_xh1
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp2i6z_xh1/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp2i6z_xh1/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -999,13 +1117,14 @@ Code:
         int main(void) {
           return getrandom ();
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking for function "getrandom" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking for function "getrandom" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplclbmrhy
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplclbmrhy/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplclbmrhy/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1017,13 +1136,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <sys/random.h> has symbol "GRND_NONBLOCK" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <sys/random.h> has symbol "GRND_NONBLOCK" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpt2cqk06g
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpt2cqk06g/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpt2cqk06g/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1035,13 +1155,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <sys/inotify.h> has symbol "inotify_init" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <sys/inotify.h> has symbol "inotify_init" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpxw8p3bvz
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpxw8p3bvz/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpxw8p3bvz/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1053,13 +1174,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <sys/inotify.h> has symbol "inotify_init1" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <sys/inotify.h> has symbol "inotify_init1" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplwn7ltl0
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplwn7ltl0/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplwn7ltl0/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1071,17 +1193,18 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp8thk5rg7/testfile.c: In function 'main':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp8thk5rg7/testfile.c:5:28: warning: extra tokens at end of #ifndef directive
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplwn7ltl0/testfile.c: In function 'main':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmplwn7ltl0/testfile.c:5:28: warning: extra tokens at end of #ifndef directive
     5 |             #ifndef struct iovec
       |                            ^~~~~
 
-Header <sys/uio.h> has symbol "struct iovec" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <sys/uio.h> has symbol "struct iovec" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp905odrgy
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp905odrgy/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp905odrgy/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  #include <sys/endian.h>
@@ -1094,17 +1217,18 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpjun12w3k/testfile.c:1:10: fatal error: sys/endian.h: No such file or directory
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp905odrgy/testfile.c:1:10: fatal error: sys/endian.h: No such file or directory
     1 | #include <sys/endian.h>
       |          ^~~~~~~~~~~~~~
 compilation terminated.
 
-Header <machine/bswap.h> has symbol "bswap32" : NO (cached)
-Using cached compile:
-Cached command line:   
+Header <machine/bswap.h> has symbol "bswap32" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmppbiu6zgy
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmppbiu6zgy/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmppbiu6zgy/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1116,13 +1240,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <sys/prctl.h> has symbol "PR_SET_TIMERSLACK" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <sys/prctl.h> has symbol "PR_SET_TIMERSLACK" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmoe5kt8_
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmoe5kt8_/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpmoe5kt8_/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1134,13 +1259,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <linux/rtnetlink.h> has symbol "IFLA_PROTO_DOWN" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <linux/rtnetlink.h> has symbol "IFLA_PROTO_DOWN" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphoc8agdt
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphoc8agdt/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphoc8agdt/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1152,13 +1278,14 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Header <sys/sysmacros.h> has symbol "makedev" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <sys/sysmacros.h> has symbol "makedev" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpi_c1c8ol
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpi_c1c8ol/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpi_c1c8ol/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1170,18 +1297,19 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpli83pl0n/testfile.c: In function 'main':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpli83pl0n/testfile.c:6:17: error: 'optreset' undeclared (first use in this function)
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpi_c1c8ol/testfile.c: In function 'main':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpi_c1c8ol/testfile.c:6:17: error: 'optreset' undeclared (first use in this function)
     6 |                 optreset;
       |                 ^~~~~~~~
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpli83pl0n/testfile.c:6:17: note: each undeclared identifier is reported only once for each function it appears in
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpi_c1c8ol/testfile.c:6:17: note: each undeclared identifier is reported only once for each function it appears in
 
-Header <getopt.h> has symbol "optreset" : NO (cached)
-Using cached compile:
-Cached command line:   
+Header <getopt.h> has symbol "optreset" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpti427bb0
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpti427bb0/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpti427bb0/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1193,17 +1321,18 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpfv679aa4/testfile.c: In function 'main':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpfv679aa4/testfile.c:5:28: warning: extra tokens at end of #ifndef directive
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpti427bb0/testfile.c: In function 'main':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpti427bb0/testfile.c:5:28: warning: extra tokens at end of #ifndef directive
     5 |             #ifndef struct utmpx
       |                            ^~~~~
 
-Header <utmpx.h> has symbol "struct utmpx" : YES (cached)
-Using cached compile:
-Cached command line:   
+Header <utmpx.h> has symbol "struct utmpx" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpbidinkg_
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpbidinkg_/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpbidinkg_/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1215,19 +1344,20 @@ Code:
             #endif
             return 0;
         }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp_r3rbpvd/testfile.c: In function 'main':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp_r3rbpvd/testfile.c:6:17: error: 'IPPROTO_MPTCP' undeclared (first use in this function); did you mean 'IPPROTO_MTP'?
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpbidinkg_/testfile.c: In function 'main':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpbidinkg_/testfile.c:6:17: error: 'IPPROTO_MPTCP' undeclared (first use in this function); did you mean 'IPPROTO_MTP'?
     6 |                 IPPROTO_MPTCP;
       |                 ^~~~~~~~~~~~~
       |                 IPPROTO_MTP
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp_r3rbpvd/testfile.c:6:17: note: each undeclared identifier is reported only once for each function it appears in
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpbidinkg_/testfile.c:6:17: note: each undeclared identifier is reported only once for each function it appears in
 
-Header <netinet/in.h> has symbol "IPPROTO_MPTCP" : NO (cached)
-Using cached compile:
-Cached command line:   
+Header <netinet/in.h> has symbol "IPPROTO_MPTCP" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp95m0ovrr
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp95m0ovrr/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp95m0ovrr/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  #include <signal.h>
@@ -1236,17 +1366,18 @@ Code:
             foo.sigev_notify_thread_id;
 
         };
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp4p36a_ge/testfile.c: In function 'bar':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp4p36a_ge/testfile.c:4:16: error: 'struct sigevent' has no member named 'sigev_notify_thread_id'
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp95m0ovrr/testfile.c: In function 'bar':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp95m0ovrr/testfile.c:4:16: error: 'struct sigevent' has no member named 'sigev_notify_thread_id'
     4 |             foo.sigev_notify_thread_id;
       |                ^
 
-Checking whether type "struct sigevent" has member "sigev_notify_thread_id" : NO (cached)
-Using cached compile:
-Cached command line:   
+Checking whether type "struct sigevent" has member "sigev_notify_thread_id" : NO 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphz1yfyk6
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphz1yfyk6/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphz1yfyk6/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  #include <sys/stat.h>
@@ -1255,24 +1386,26 @@ Code:
             foo.st_atim;
 
         };
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Checking whether type "struct stat" has member "st_atim" : YES (cached)
-Using cached compile:
-Cached command line:   
+Checking whether type "struct stat" has member "st_atim" : YES 
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpd8x6tf4b
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpd8x6tf4b/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpd8x6tf4b/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
   #include <sys/eventfd.h>
   int main(void) { return eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC); }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphwpm2yt7
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphwpm2yt7/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmphwpm2yt7/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1288,12 +1421,13 @@ Code:
   #error Not supported
   #endif
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpzmfz4_9l
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpzmfz4_9l/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpzmfz4_9l/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1305,12 +1439,13 @@ Code:
   #include <sys/mman.h>
   #include <stddef.h>
   int main(void) { return madvise(NULL, 0, MADV_DONTNEED); }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp6yg8nvtz
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp6yg8nvtz/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp6yg8nvtz/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1320,12 +1455,13 @@ Code:
 
   #include <sys/mman.h>
   int main(void) { return memfd_create("foo", MFD_ALLOW_SEALING); }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvvii_qmi
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvvii_qmi/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvvii_qmi/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1339,12 +1475,13 @@ Code:
   #else
   int main(void) { struct file_handle fh; return open_by_handle_at(0, &fh, 0); }
   #endif
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpx8oskg_z
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpx8oskg_z/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpx8oskg_z/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1360,12 +1497,13 @@ Code:
       int pipefd[2];
       return pipe2(pipefd, O_CLOEXEC);
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvks3do2p
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvks3do2p/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpvks3do2p/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1376,12 +1514,13 @@ Code:
   #include <sys/mman.h>
   #include <stddef.h>
   int main(void) { return posix_madvise(NULL, 0, POSIX_MADV_DONTNEED); }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpr1t00rfr
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpr1t00rfr/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpr1t00rfr/output.exe -pthread -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1395,17 +1534,18 @@ Code:
     pthread_setname_np(thread, "QEMU");
     return 0;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpk1zpevdn/testfile.c: In function 'main':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpk1zpevdn/testfile.c:9:5: warning: implicit declaration of function 'pthread_setname_np'; did you mean 'pthread_setcanceltype'? [-Wimplicit-function-declaration]
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpr1t00rfr/testfile.c: In function 'main':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpr1t00rfr/testfile.c:9:5: warning: implicit declaration of function 'pthread_setname_np'; did you mean 'pthread_setcanceltype'? [-Wimplicit-function-declaration]
     9 |     pthread_setname_np(thread, "QEMU");
       |     ^~~~~~~~~~~~~~~~~~
       |     pthread_setcanceltype
 
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp22s56_ip
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp22s56_ip/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp22s56_ip/output.exe -pthread -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1418,17 +1558,18 @@ Code:
     pthread_create(&thread, 0, f, 0);
     return 0;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpb62x4oo9/testfile.c: In function 'f':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpb62x4oo9/testfile.c:4:29: warning: implicit declaration of function 'pthread_setname_np'; did you mean 'pthread_setcanceltype'? [-Wimplicit-function-declaration]
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp22s56_ip/testfile.c: In function 'f':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp22s56_ip/testfile.c:4:29: warning: implicit declaration of function 'pthread_setname_np'; did you mean 'pthread_setcanceltype'? [-Wimplicit-function-declaration]
     4 |   static void *f(void *p) { pthread_setname_np("QEMU"); return NULL; }
       |                             ^~~~~~~~~~~~~~~~~~
       |                             pthread_setcanceltype
 
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpgecvxzmb
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpgecvxzmb/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpgecvxzmb/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1439,16 +1580,17 @@ Code:
   #include <sys/signalfd.h>
   #include <stddef.h>
   int main(void) { return signalfd(-1, NULL, SFD_CLOEXEC); }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp7epwk14e/testfile.c: In function 'main':
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmp7epwk14e/testfile.c:8:27: warning: null argument where non-null required (argument 2) [-Wnonnull]
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpgecvxzmb/testfile.c: In function 'main':
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpgecvxzmb/testfile.c:8:27: warning: null argument where non-null required (argument 2) [-Wnonnull]
     8 |   int main(void) { return signalfd(-1, NULL, SFD_CLOEXEC); }
       |                           ^~~~~~~~
 
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpiqveavd6
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpiqveavd6/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpiqveavd6/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1467,12 +1609,13 @@ Code:
     splice(STDIN_FILENO, NULL, fd, NULL, len, SPLICE_F_MOVE);
     return 0;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpfpgu7pni
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpfpgu7pni/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpfpgu7pni/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1484,12 +1627,13 @@ Code:
   int main(int argc, char *argv[]) {
     return mlockall(MCL_FUTURE);
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9cvq8fzj
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9cvq8fzj/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9cvq8fzj/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1498,16 +1642,17 @@ Code:
   int main(void) {
     return 0;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
- /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpas3ei7m3/testfile.c:2:24: warning: missing terminating ' character
+Compiler stderr:
+ /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9cvq8fzj/testfile.c:2:24: warning: missing terminating ' character
     2 |   #include <linux/fs.h>'
       |                        ^
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpas3ei7m3/testfile.c:2:24: warning: extra tokens at end of #include directive
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9cvq8fzj/testfile.c:2:24: warning: extra tokens at end of #include directive
 
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpua8jf73_
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpua8jf73_/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpua8jf73_/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 -Werror 
 
 Code:
  
@@ -1516,12 +1661,13 @@ Code:
     int main(int argc, char *argv[]) {
         return printf("%zu", SIZE_MAX);
     }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpa3zil7r2
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpa3zil7r2/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpa3zil7r2/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1536,12 +1682,13 @@ Code:
     __atomic_fetch_add(&x, y, __ATOMIC_RELAXED);
     return 0;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpl4jkf3jl
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpl4jkf3jl/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpl4jkf3jl/output.exe -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1553,12 +1700,13 @@ Code:
   int main(void) {
     return getauxval(AT_HWCAP) == 0;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Using cached compile:
-Cached command line:   
+Running compile:
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9v2b8zjy
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9v2b8zjy/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmp9v2b8zjy/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -std=gnu11 
 
 Code:
  
@@ -1584,11 +1732,11 @@ Code:
     }
     return -1;
   }
-Cached compiler stdout:
+Compiler stdout:
  
-Cached compiler stderr:
+Compiler stderr:
  
-Program scripts/minikconf.py found: YES (/usr/bin/python3 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/minikconf.py)
+Program scripts/minikconf.py found: YES (/usr/bin/python3 /home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/minikconf.py)
 Configuring aarch64-linux-user-config-target.h using configuration
 Configuring aarch64_be-linux-user-config-target.h using configuration
 Configuring alpha-linux-user-config-target.h using configuration
@@ -1625,70 +1773,24 @@ Configuring xtensa-linux-user-config-target.h using configuration
 Configuring xtensaeb-linux-user-config-target.h using configuration
 Pkg-config binary for MachineChoice.HOST is cached.
 Determining dependency 'capstone' with pkg-config executable '/usr/bin/pkg-config'
-env[PKG_CONFIG_PATH]: 
-Called `/usr/bin/pkg-config --modversion capstone` -> 0
-3.0.5
-env[PKG_CONFIG_PATH]: 
-Called `/usr/bin/pkg-config --cflags capstone` -> 0
--I/usr/include/capstone
-env[PKG_CONFIG_ALLOW_SYSTEM_LIBS]: 1
-env[PKG_CONFIG_PATH]: 
-Called `/usr/bin/pkg-config --libs --static capstone` -> 0
--L/usr/lib/x86_64-linux-gnu -lcapstone
-env[PKG_CONFIG_PATH]: 
-Called `/usr/bin/pkg-config --libs --static capstone` -> 0
--lcapstone
-Running compile:
-Working directory:  /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmplsoj5yci
-Command line:  c++ -m64 -mcx16 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmplsoj5yci/testfile.cpp -o /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmplsoj5yci/output.exe -D_FILE_OFFSET_BITS=64 -O0 -fpermissive 
+env[PKG_CONFIG_PATH]: /usr/local/protobuf/lib/pkgconfig/
+Called `/usr/bin/pkg-config --modversion capstone` -> 1
 
-Code:
- #include<stdio.h>
-        
-        int main(void) {
-            printf("%ld\n", (long)(sizeof(void *)));
-            return 0;
-        };
-Compiler stdout:
- 
-Compiler stderr:
- 
-Program stdout:
-
-8
-
-Program stderr:
-
-
-Running compile:
-Working directory:  /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpq9bae72p
-Command line:  c++ -m64 -mcx16 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpq9bae72p/testfile.cpp -o /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpq9bae72p/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
-
-Code:
- 
-Compiler stdout:
- install: /usr/lib/gcc/x86_64-linux-gnu/9/
-programs: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/
-libraries: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
-
-Compiler stderr:
- 
-Dependency capstone found: NO found 3.0.5 but need: '>=4.0'
 Run-time dependency capstone found: NO (tried pkgconfig)
 Configuring capstone-defs.h using configuration
 Configuring config-host.h using configuration
-Program scripts/hxtool found: YES (/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/hxtool)
-Program scripts/shaderinclude.pl found: YES (/usr/bin/env perl /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/shaderinclude.pl)
-Program scripts/qapi-gen.py found: YES (/usr/bin/python3 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/qapi-gen.py)
-Program scripts/qemu-version.sh found: YES (/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/qemu-version.sh)
+Program scripts/hxtool found: YES (/home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/hxtool)
+Program scripts/shaderinclude.pl found: YES (/usr/bin/env perl /home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/shaderinclude.pl)
+Program scripts/qapi-gen.py found: YES (/usr/bin/python3 /home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/qapi-gen.py)
+Program scripts/qemu-version.sh found: YES (/home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/qemu-version.sh)
 
 Executing subproject libvhost-user 
 
 Project name: libvhost-user
 Project version: undefined
-C compiler for the host machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
+C compiler for the host machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0")
 C linker for the host machine: cc -m64 -mcx16 ld.bfd 2.34
-C compiler for the build machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0")
+C compiler for the build machine: cc -m64 -mcx16 (gcc 9.4.0 "cc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0")
 C linker for the build machine: cc -m64 -mcx16 ld.bfd 2.34
 Dependency threads found: YES unknown (cached)
 Dependency glib-2.0 found: YES 6.1.90 (overridden)
@@ -1696,12 +1798,12 @@ Build targets in project: 7
 Subproject libvhost-user finished.
 
 Program cat found: YES (/usr/bin/cat)
-Program scripts/decodetree.py found: YES (/usr/bin/python3 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/decodetree.py)
-Program scripts/modinfo-collect.py found: YES (/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/modinfo-collect.py)
-Program scripts/modinfo-generate.py found: YES (/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/modinfo-generate.py)
+Program scripts/decodetree.py found: YES (/usr/bin/python3 /home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/decodetree.py)
+Program scripts/modinfo-collect.py found: YES (/home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/modinfo-collect.py)
+Program scripts/modinfo-generate.py found: YES (/home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/modinfo-generate.py)
 Program nm found: YES
-Program scripts/undefsym.py found: YES (/usr/bin/python3 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/undefsym.py)
-Program scripts/feature_to_c.sh found: YES (/bin/sh /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/scripts/feature_to_c.sh)
+Program scripts/undefsym.py found: YES (/usr/bin/python3 /home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/undefsym.py)
+Program scripts/feature_to_c.sh found: YES (/bin/sh /home/cmy/rehosting/qemu5_rehosting/qemu5/scripts/feature_to_c.sh)
 Program qemu-keymap found: NO
 Program cp found: YES (/usr/bin/cp)
 Program sphinx-build-3 sphinx-build found: NO
@@ -1772,26 +1874,26 @@ Adding test "QAPI schema regression tests"
 Program diff found: YES (/usr/bin/diff)
 Program dbus-daemon found: YES (/usr/bin/dbus-daemon)
 Program /usr/bin/gdbus-codegen found: YES (/usr/bin/gdbus-codegen)
-Program initrd-stress.sh found: YES (/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/tests/migration/initrd-stress.sh)
+Program initrd-stress.sh found: YES (/home/cmy/rehosting/qemu5_rehosting/qemu5/tests/migration/initrd-stress.sh)
 Build targets in project: 258
 
 qemu 6.1.90
 
   Directories
-    Install prefix               : /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static
+    Install prefix               : /home/cmy/rehosting/qemu5_rehosting/qemu-user-static
     BIOS directory               : share/qemu
-    firmware path                : /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/qemu-firmware
+    firmware path                : /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/qemu-firmware
     binary directory             : bin
     library directory            : lib
     module directory             : lib/qemu
     libexec directory            : libexec
     include directory            : include
-    config directory             : /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/etc
-    local state directory        : /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/var
+    config directory             : /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/etc
+    local state directory        : /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/var
     Manual directory             : share/man
-    Doc directory                : /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/doc
-    Build directory              : /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build
-    Source path                  : /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5
+    Doc directory                : /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/doc
+    Build directory              : /home/cmy/rehosting/qemu5_rehosting/qemu5/build
+    Source path                  : /home/cmy/rehosting/qemu5_rehosting/qemu5
     GIT submodules               : ui/keycodemapdb tests/fp/berkeley-testfloat-3 tests/fp/berkeley-softfloat-3 dtc capstone slirp
 
   Host binaries
@@ -1860,7 +1962,7 @@ qemu 6.1.90
     i386 tests                   : gcc via fedora-i386-cross
     m68k tests                   : m68k-linux-gnu-gcc via debian-m68k-cross
     microblaze tests             : microblaze-linux-musl-gcc via debian-microblaze-cross
-    mips tests                   : mips-linux-gnu-gcc via debian-mips-cross
+    mips tests                   : mips-linux-gnu-gcc
     mips64 tests                 : mips64-linux-gnuabi64-gcc via debian-mips64-cross
     mips64el tests               : mips64el-linux-gnuabi64-gcc via debian-mips64el-cross
     mipsel tests                 : mipsel-linux-gnu-gcc via debian-mipsel-cross
@@ -1868,7 +1970,7 @@ qemu 6.1.90
     ppc tests                    : powerpc-linux-gnu-gcc-10 via debian-powerpc-test-cross
     ppc64 tests                  : powerpc64-linux-gnu-gcc-10 via debian-powerpc-test-cross
     ppc64le tests                : powerpc64le-linux-gnu-gcc-10 via debian-powerpc-test-cross
-    riscv64 tests                : riscv64-linux-gnu-gcc via debian-riscv64-cross
+    riscv64 tests                : riscv64-linux-gnu-gcc
     s390x tests                  : s390x-linux-gnu-gcc via debian-s390x-cross
     sh4 tests                    : sh4-linux-gnu-gcc via debian-sh4-cross
     sparc64 tests                : sparc64-linux-gnu-gcc via debian-sparc64-cross
@@ -1945,7 +2047,7 @@ qemu 6.1.90
     bzip2 support                : NO
     lzfse support                : NO
     zstd support                 : NO
-    NUMA host support            : YES
+    NUMA host support            : NO
     libxml2                      : NO
     capstone                     : internal
     libpmem support              : NO
@@ -1956,36 +2058,36 @@ qemu 6.1.90
   Subprojects
     libvhost-user                : YES
 
-Found ninja-1.10.2.git.kitware.jobserver-1 at /home/htay/.local/bin/ninja
+Found ninja-1.10.0 at /usr/bin/ninja
 Running compile:
-Working directory:  /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpqrui158o
-Command line:  cc -m64 -mcx16 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpqrui158o/testfile.c -o /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpqrui158o/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 --print-search-dirs 
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpzqmp_w2i
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpzqmp_w2i/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpzqmp_w2i/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 --print-search-dirs 
 
 Code:
  
 Compiler stdout:
  install: /usr/lib/gcc/x86_64-linux-gnu/9/
 programs: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/
-libraries: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
+libraries: =./x86_64-linux-gnu/9/:./x86_64-linux-gnu/:./../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:./:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
 
 Compiler stderr:
  
 Running compile:
-Working directory:  /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpl1quybo_
-Command line:  cc -m64 -mcx16 /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpl1quybo_/testfile.c -o /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/meson-private/tmpl1quybo_/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 --print-search-dirs 
+Working directory:  /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpno1z08ql
+Command line:  cc -m64 -mcx16 /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpno1z08ql/testfile.c -o /home/cmy/rehosting/qemu5_rehosting/qemu5/build/meson-private/tmpno1z08ql/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 --print-search-dirs 
 
 Code:
  
 Compiler stdout:
  install: /usr/lib/gcc/x86_64-linux-gnu/9/
 programs: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/bin/
-libraries: =/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
+libraries: =./x86_64-linux-gnu/9/:./x86_64-linux-gnu/:./../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/local/protobuf/lib/x86_64-linux-gnu/9/:/usr/local/protobuf/lib/x86_64-linux-gnu/:/usr/local/protobuf/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/9/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../lib/:/lib/x86_64-linux-gnu/9/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/9/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:./:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/9/../../../:/lib/:/usr/lib/
 
 Compiler stderr:
  
 Running compile:
-Working directory:  /tmp/tmpkfpfxe2d
-Command line:  c++ -m64 -mcx16 /tmp/tmpkfpfxe2d/testfile.cpp -o /tmp/tmpkfpfxe2d/output.obj -D_FILE_OFFSET_BITS=64 -c -std=gnu++11 
+Working directory:  /tmp/tmpg7x155j2
+Command line:  c++ -m64 -mcx16 /tmp/tmpg7x155j2/testfile.cpp -o /tmp/tmpg7x155j2/output.obj -D_FILE_OFFSET_BITS=64 -c -std=gnu++11 
 
 Code:
  int i = static_cast<int>(0);

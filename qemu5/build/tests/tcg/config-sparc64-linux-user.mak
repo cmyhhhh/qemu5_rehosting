@@ -2,7 +2,7 @@
 TARGET_NAME=sparc64
 target=sparc64-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-sparc64
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-sparc64
 CROSS_CC_GUEST_CFLAGS=-m64 -mcpu=ultrasparc
 DOCKER_IMAGE=debian-sparc64-cross
 DOCKER_CROSS_CC_GUEST=sparc64-linux-gnu-gcc

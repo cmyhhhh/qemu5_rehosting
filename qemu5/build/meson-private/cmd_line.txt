@@ -1,8 +1,8 @@
 [options]
 audio_drv_list = default
 default_devices = true
-docdir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/doc
-qemu_firmwarepath = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/qemu-firmware
+docdir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/doc
+qemu_firmwarepath = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/qemu-firmware
 qemu_suffix = qemu
 sphinx_build = 
 trace_file = trace
@@ -19,18 +19,17 @@ xen = disabled
 capstone = auto
 fdt = auto
 slirp = auto
-prefix = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static
-bindir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/bin
-datadir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share
-includedir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/include
-libdir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/lib
-libexecdir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/libexec
-localedir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/locale
-localstatedir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/var
-mandir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/man
-sysconfdir = /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/etc
-backend = ninja
+prefix = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static
+bindir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/bin
+datadir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share
+includedir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/include
+libdir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/lib
+libexecdir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/libexec
+localedir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/locale
+localstatedir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/var
+mandir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/man
+sysconfdir = /home/cmy/rehosting/qemu5_rehosting/qemu-user-static/etc
 
 [properties]
-native_file = ['/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/config-meson.cross']
+native_file = ['/home/cmy/rehosting/qemu5_rehosting/qemu5/build/config-meson.cross']
 

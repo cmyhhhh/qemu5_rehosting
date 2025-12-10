@@ -2,7 +2,7 @@
 TARGET_NAME=ppc64
 target=ppc64-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-ppc64
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-ppc64
 CROSS_CC_GUEST_CFLAGS=
 DOCKER_IMAGE=debian-powerpc-test-cross
 DOCKER_CROSS_CC_GUEST=powerpc64-linux-gnu-gcc-10

@@ -13,19 +13,21 @@ unset CXXFLAGS
 unset INSTALL
 unset LD
 unset LDFLAGS
-unset LD_LIBRARY_PATH
+LD_LIBRARY_PATH=':/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/:/usr/local/protobuf/lib/'
+export LD_LIBRARY_PATH
 unset LIBTOOL
 unset MAKE
 unset NM
 unset OBJCOPY
-PATH='/home/htay/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/cross/mipsel-linux-musl/bin:/opt/cross/mipseb-linux-musl/bin:/opt/cross/arm-linux-musleabi/bin'
+PATH='/home/cmy/.trae-cn-server/bin/stable-4b3f5ec95a6b90d976fe38c4d0844821c2a284b8/bin/remote-cli:/home/cmy/anaconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/protobuf/bin/:/usr/local/protobuf/bin/:/usr/local/protobuf/bin/:/usr/local/protobuf/bin/'
 export PATH
 unset PKG_CONFIG
 unset PKG_CONFIG_LIBDIR
-unset PKG_CONFIG_PATH
+PKG_CONFIG_PATH='/usr/local/protobuf/lib/pkgconfig/'
+export PKG_CONFIG_PATH
 unset PYTHON
 unset SDL2_CONFIG
 unset SMBD
 unset STRIP
 unset WINDRES
-exec '/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configure' '--prefix=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static' '--static' '--disable-system' '--enable-linux-user' "$@"
+exec '/home/cmy/rehosting/qemu5_rehosting/qemu5/configure' '--prefix=/home/cmy/rehosting/qemu5_rehosting/qemu-user-static' '--static' '--disable-system' '--enable-linux-user' "$@"

@@ -21,7 +21,7 @@
 
 #define CONFIG_BDRV_RW_WHITELIST 
 
-#define CONFIG_BINDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/bin"
+#define CONFIG_BINDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/bin"
 
 #define CONFIG_BOCHS 1
 
@@ -165,8 +165,6 @@
 
 #undef CONFIG_NETTLE
 
-#define CONFIG_NUMA 1
-
 #define CONFIG_OPEN_BY_HANDLE
 
 #define CONFIG_PARALLELS 1
@@ -187,7 +185,7 @@
 
 #define CONFIG_PREADV
 
-#define CONFIG_PREFIX "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static"
+#define CONFIG_PREFIX "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static"
 
 #define CONFIG_PTHREAD_SETNAME_NP_WO_TID
 
@@ -197,23 +195,23 @@
 
 #define CONFIG_QED 1
 
-#define CONFIG_QEMU_CONFDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/etc/qemu"
+#define CONFIG_QEMU_CONFDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/etc/qemu"
 
-#define CONFIG_QEMU_DATADIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/qemu"
+#define CONFIG_QEMU_DATADIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/qemu"
 
-#define CONFIG_QEMU_DESKTOPDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/applications"
+#define CONFIG_QEMU_DESKTOPDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/applications"
 
-#define CONFIG_QEMU_FIRMWAREPATH "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/qemu-firmware"
+#define CONFIG_QEMU_FIRMWAREPATH "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/qemu-firmware"
 
-#define CONFIG_QEMU_HELPERDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/libexec"
+#define CONFIG_QEMU_HELPERDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/libexec"
 
-#define CONFIG_QEMU_ICONDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/icons"
+#define CONFIG_QEMU_ICONDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/icons"
 
-#define CONFIG_QEMU_LOCALEDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/share/locale"
+#define CONFIG_QEMU_LOCALEDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/share/locale"
 
-#define CONFIG_QEMU_LOCALSTATEDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/var"
+#define CONFIG_QEMU_LOCALSTATEDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/var"
 
-#define CONFIG_QEMU_MODDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/lib/qemu"
+#define CONFIG_QEMU_MODDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/lib/qemu"
 
 #undef CONFIG_QEMU_PRIVATE_XTS
 
@@ -263,7 +261,7 @@
 
 #define CONFIG_SYNC_FILE_RANGE
 
-#define CONFIG_SYSCONFDIR "/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu-user-static/etc"
+#define CONFIG_SYSCONFDIR "/home/cmy/rehosting/qemu5_rehosting/qemu-user-static/etc"
 
 #define CONFIG_SYSMACROS
 
@@ -283,7 +281,7 @@
 
 #undef CONFIG_USB_LIBUSB
 
-#undef CONFIG_VALGRIND_H
+#define CONFIG_VALGRIND_H
 
 #undef CONFIG_VDE
 

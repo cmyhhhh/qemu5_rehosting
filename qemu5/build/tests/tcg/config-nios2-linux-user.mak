@@ -2,7 +2,7 @@
 TARGET_NAME=nios2
 target=nios2-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-nios2
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-nios2
 CROSS_CC_GUEST_CFLAGS=
 DOCKER_IMAGE=debian-nios2-cross
 DOCKER_CROSS_CC_GUEST=nios2-linux-gnu-gcc

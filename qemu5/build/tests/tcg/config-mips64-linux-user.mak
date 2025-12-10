@@ -2,7 +2,7 @@
 TARGET_NAME=mips64
 target=mips64-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-mips64
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-mips64
 CROSS_CC_GUEST_CFLAGS=
 DOCKER_IMAGE=debian-mips64-cross
 DOCKER_CROSS_CC_GUEST=mips64-linux-gnuabi64-gcc

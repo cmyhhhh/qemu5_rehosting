@@ -2,7 +2,7 @@
 TARGET_NAME=s390x
 target=s390x-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-s390x
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-s390x
 CROSS_CC_GUEST_CFLAGS=
 DOCKER_IMAGE=debian-s390x-cross
 DOCKER_CROSS_CC_GUEST=s390x-linux-gnu-gcc

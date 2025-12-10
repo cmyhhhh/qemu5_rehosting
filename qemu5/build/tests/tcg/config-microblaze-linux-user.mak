@@ -2,7 +2,7 @@
 TARGET_NAME=microblaze
 target=microblaze-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-microblaze
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-microblaze
 CROSS_CC_GUEST_CFLAGS=
 DOCKER_IMAGE=debian-microblaze-cross
 DOCKER_CROSS_CC_GUEST=microblaze-linux-musl-gcc

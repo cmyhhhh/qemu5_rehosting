@@ -3336,7 +3336,7 @@ tests/unit/check-qstring.p/check-qstring.c.o \
 tests/unit/check-qstring \
 tests/unit/ptimer-test.p/ptimer-test.c.o \
 tests/unit/ptimer-test.p/ptimer-test-stubs.c.o \
-tests/unit/ptimer-test.p/_home_htay_greenhouse_project_code_Greenhouse_GreenhouseQemu_qemu5_hw_core_ptimer.c.o \
+tests/unit/ptimer-test.p/_home_cmy_rehosting_qemu5_rehosting_qemu5_hw_core_ptimer.c.o \
 tests/unit/ptimer-test \
 tests/unit/rcutorture.p/rcutorture.c.o \
 tests/unit/rcutorture \
@@ -3390,7 +3390,7 @@ tests/unit/test-rcu-tailq \
 tests/unit/test-shift128.p/test-shift128.c.o \
 tests/unit/test-shift128 \
 tests/unit/test-smp-parse.p/test-smp-parse.c.o \
-tests/unit/test-smp-parse.p/_home_htay_greenhouse_project_code_Greenhouse_GreenhouseQemu_qemu5_hw_core_machine-smp.c.o \
+tests/unit/test-smp-parse.p/_home_cmy_rehosting_qemu5_rehosting_qemu5_hw_core_machine-smp.c.o \
 tests/unit/test-smp-parse \
 tests/unit/test-string-input-visitor.p/test-string-input-visitor.c.o \
 tests/unit/test-string-input-visitor \
@@ -3429,6 +3429,8 @@ meson-install \
 install \
 meson-dist \
 dist \
+meson-scan-build \
+scan-build \
 meson-uninstall \
 uninstall \
 all \
@@ -3438,45 +3440,45 @@ clean-ctlist \
 meson-clean \
 build.ninja \
 reconfigure \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/ppc-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/xtensa-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sh4eb-linux-user.mak \
-../subprojects/libvhost-user/meson.build \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/m68k-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/config-host.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mipsn32el-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/or1k-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/aarch64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/microblazeel-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/m68k-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mipsn32el-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/ppc64-linux-user.mak \
 ../meson_options.txt \
-../VERSION \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sparc-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/x86_64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sh4eb-linux-user.mak \
 ../meson.build \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/arm-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sparc64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/hppa-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/riscv64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/hexagon-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/xtensaeb-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mipsel-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mips-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mips64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sh4-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/alpha-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/riscv32-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mipsn32-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/aarch64_be-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/nios2-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/i386-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/x86_64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sparc32plus-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/s390x-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/microblaze-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/ppc64le-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/microblazeel-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mips64el-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/cris-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/ppc64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/armeb-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/nios2-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/or1k-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/riscv32-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mipsn32-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/ppc64le-linux-user.mak \
+../subprojects/libvhost-user/meson.build \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/cris-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/riscv64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/xtensa-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sparc64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mips-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mips64el-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/i386-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/hppa-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/aarch64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/config-host.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mipsel-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/ppc-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/arm-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/aarch64_be-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sparc-linux-user.mak \
+../VERSION \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/hexagon-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sh4-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/alpha-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/xtensaeb-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/s390x-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/armeb-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/microblaze-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mips64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sparc32plus-linux-user.mak \
 ../qapi/meson.build \
 ../qobject/meson.build \
 ../stubs/meson.build \
@@ -3653,82 +3655,82 @@ reconfigure \
 ../tests/qapi-schema/meson.build \
 ../tests/qtest/meson.build \
 ../tests/migration/meson.build \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-aarch64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-aarch64_be-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-alpha-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-arm-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-armeb-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-cris-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-hexagon-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-hppa-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-i386-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-m68k-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-microblaze-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-microblazeel-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mips-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mips64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mips64el-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mipsel-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mipsn32-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mipsn32el-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-nios2-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-or1k-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-ppc-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-ppc64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-ppc64le-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-riscv32-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-riscv64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-s390x-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sh4-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sh4eb-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sparc-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sparc32plus-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sparc64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-x86_64-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-xtensa-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-xtensaeb-linux-user.mak \
-/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/config-meson.cross \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-aarch64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-aarch64_be-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-alpha-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-arm-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-armeb-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-cris-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-hexagon-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-hppa-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-i386-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-m68k-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-microblaze-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-microblazeel-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mips-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mips64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mips64el-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mipsel-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mipsn32-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mipsn32el-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-nios2-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-or1k-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-ppc-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-ppc64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-ppc64le-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-riscv32-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-riscv64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-s390x-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sh4-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sh4eb-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sparc-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sparc32plus-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sparc64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-x86_64-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-xtensa-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-xtensaeb-linux-user.mak \
+/home/cmy/rehosting/qemu5_rehosting/qemu5/build/config-meson.cross \
 meson-private/coredata.dat
 build-files = \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/ppc-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/xtensa-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sh4eb-linux-user.mak \
-    ../subprojects/libvhost-user/meson.build \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/m68k-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/config-host.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mipsn32el-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/or1k-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/aarch64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/microblazeel-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/m68k-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mipsn32el-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/ppc64-linux-user.mak \
     ../meson_options.txt \
-    ../VERSION \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sparc-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/x86_64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sh4eb-linux-user.mak \
     ../meson.build \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/arm-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sparc64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/hppa-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/riscv64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/hexagon-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/xtensaeb-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mipsel-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mips-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mips64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sh4-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/alpha-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/riscv32-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mipsn32-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/aarch64_be-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/nios2-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/i386-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/x86_64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/sparc32plus-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/s390x-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/microblaze-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/ppc64le-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/microblazeel-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/mips64el-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/cris-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/ppc64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/configs/targets/armeb-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/nios2-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/or1k-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/riscv32-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mipsn32-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/ppc64le-linux-user.mak \
+    ../subprojects/libvhost-user/meson.build \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/cris-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/riscv64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/xtensa-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sparc64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mips-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mips64el-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/i386-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/hppa-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/aarch64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/config-host.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mipsel-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/ppc-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/arm-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/aarch64_be-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sparc-linux-user.mak \
+    ../VERSION \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/hexagon-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sh4-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/alpha-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/xtensaeb-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/s390x-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/armeb-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/microblaze-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/mips64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/configs/targets/sparc32plus-linux-user.mak \
     ../qapi/meson.build \
     ../qobject/meson.build \
     ../stubs/meson.build \
@@ -3905,39 +3907,39 @@ build-files = \
     ../tests/qapi-schema/meson.build \
     ../tests/qtest/meson.build \
     ../tests/migration/meson.build \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-aarch64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-aarch64_be-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-alpha-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-arm-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-armeb-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-cris-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-hexagon-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-hppa-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-i386-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-m68k-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-microblaze-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-microblazeel-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mips-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mips64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mips64el-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mipsel-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mipsn32-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-mipsn32el-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-nios2-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-or1k-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-ppc-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-ppc64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-ppc64le-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-riscv32-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-riscv64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-s390x-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sh4-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sh4eb-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sparc-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sparc32plus-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-sparc64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-x86_64-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-xtensa-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/tests/tcg/config-xtensaeb-linux-user.mak \
-    /home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/config-meson.cross \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-aarch64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-aarch64_be-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-alpha-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-arm-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-armeb-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-cris-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-hexagon-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-hppa-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-i386-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-m68k-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-microblaze-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-microblazeel-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mips-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mips64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mips64el-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mipsel-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mipsn32-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-mipsn32el-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-nios2-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-or1k-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-ppc-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-ppc64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-ppc64le-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-riscv32-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-riscv64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-s390x-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sh4-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sh4eb-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sparc-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sparc32plus-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-sparc64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-x86_64-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-xtensa-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/tests/tcg/config-xtensaeb-linux-user.mak \
+    /home/cmy/rehosting/qemu5_rehosting/qemu5/build/config-meson.cross \
     meson-private/coredata.dat \

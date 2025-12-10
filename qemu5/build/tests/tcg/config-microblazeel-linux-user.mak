@@ -2,5 +2,5 @@
 TARGET_NAME=microblazeel
 target=microblazeel-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-microblazeel
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-microblazeel
 CROSS_CC_GUEST_CFLAGS=

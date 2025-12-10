@@ -2,7 +2,7 @@
 TARGET_NAME=x86_64
 target=x86_64-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-x86_64
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-x86_64
 CROSS_CC_GUEST_CFLAGS=-m64
 CROSS_CC_GUEST_STATIC=y
 CROSS_CC_GUEST=cc

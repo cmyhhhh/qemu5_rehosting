@@ -2,7 +2,7 @@
 TARGET_NAME=mips
 target=mips-linux-user
 CONFIG_USER_ONLY=y
-QEMU=/home/htay/greenhouse_project/code/Greenhouse/GreenhouseQemu/qemu5/build/qemu-mips
+QEMU=/home/cmy/rehosting/qemu5_rehosting/qemu5/build/qemu-mips
 CROSS_CC_GUEST_CFLAGS=
-DOCKER_IMAGE=debian-mips-cross
-DOCKER_CROSS_CC_GUEST=mips-linux-gnu-gcc
+CROSS_CC_GUEST_STATIC=y
+CROSS_CC_GUEST=mips-linux-gnu-gcc
