@@ -6586,6 +6586,10 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
         new_thread_info info;
         pthread_attr_t attr;
 
+        if (flags && (CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND)){
+            flags |= CLONE_THREAD_FLAGS;
+        }
+
         if (((flags & CLONE_THREAD_FLAGS) != CLONE_THREAD_FLAGS) ||
             (flags & CLONE_INVALID_THREAD_FLAGS)) {
             return -TARGET_EINVAL;
@@ -8528,8 +8532,8 @@ static abi_long qemu_execve(char *filename, char *argv[],
             static const char *blacklist[] = {
                 "bash", "sh", "dash", "zsh", "csh",
                 "ls", "cat", "echo", "cp", "mv", "rm", "mkdir", "rmdir",
-                "cd", "pwd", "grep", "sed", "awk", "head", "tail",
-                "ps", "top", "kill", "chmod", "chown", "chgrp",
+                "cd", "pwd", "grep", "sed", "awk", "head", "tail", "test"
+                "ps", "top", "kill", "chmod", "chown", "chgrp", "expr"
                 "touch", "ln", "find", "xargs", "cut", "sort", "uniq",
                 "wc", "diff", "patch", "tar", "gzip", "gunzip", "zip", "unzip",
                 "date", "time", "sleep", "true", "false", "exit", "[", "[[",
@@ -8591,6 +8595,7 @@ static abi_long qemu_execve(char *filename, char *argv[],
                 // 如果是黑名单中的命令，使用空字符串代替NULL，保持参数列表完整性
                 new_argp[offset - 2 - tokCount] = strdup("");
                 new_argp[offset - 2 - tokCount - 1] = strdup("");
+                new_argp[offset - 2 - tokCount - 2] = strdup("");
             } else {
                 // 复制应用名并将所有点号(.)替换为下划线(_)
                 char sanitized_app_name[100];
@@ -8654,10 +8659,11 @@ static abi_long qemu_execve(char *filename, char *argv[],
     }
     new_argp[dst] = NULL;
 
-    // fprintf(stderr, "[qemu] qemu_execve_path %s new_arg\n", qemu_execve_path);
-    // for (argc = 0; new_argp[argc] != NULL; argc++) {
-    //     fprintf(stderr, "   - arg %s\n", new_argp[argc]);
+    // fprintf(stderr, "[qemu] execve: %s", qemu_path);
+    // for (int i = 0; new_argp[i]; ++i) {
+    //     fprintf(stderr, " %s", new_argp[i]);
     // }
+    // fprintf(stderr, "\n");
 
     // fprintf(stderr, "   - [envp] \n");
     // for (argc = 0; envp[argc] != NULL; argc++) {
