@@ -8403,6 +8403,216 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
     [qemu] doing qemu_execven on filename /bin/echo
     2
 */
+
+/* FIRMAGENT PATCH */
+static char *sender_init(const char *service_type, const char *message) {
+    const char *COMMUNICATION_FILE = "/msg_init.txt";
+    const char *RESULT_FILE = "/result_init.txt";
+    const char *LOCK_FILE = "/msg_init.lock";
+    const int LOCK_WAIT_COUNT = 6; // 基础等待次数
+    const int LOCK_SLEEP_TIME = 5; // 等待锁时的固定睡眠时间（秒）
+    int RESULT_WAIT_TIME = 11; // 等待结果的超时时间（循环次数）
+    int result_sleep_time = LOCK_SLEEP_TIME; // 默认每次等待5秒
+    
+    // 根据service_type设置不同的结果等待时间和间隔
+    if (strcmp(service_type, "e") == 0) {
+        RESULT_WAIT_TIME = 2; // 总超时时间：2 * 10 = 20秒
+    } else if (strcmp(service_type, "s") == 0) {
+        RESULT_WAIT_TIME = 25; // 循环次数
+        result_sleep_time = 4; // 每次等待5秒，总超时时间：25 * 4 = 100秒
+    }
+    
+    // 计算结果等待的总超时时间
+    int result_total_timeout = RESULT_WAIT_TIME * result_sleep_time;
+    // 计算基础锁等待的总超时时间
+    int base_lock_total_timeout = LOCK_WAIT_COUNT * LOCK_SLEEP_TIME;
+    
+    // 等待锁的时间取两者最大值
+    int lock_wait_count = LOCK_WAIT_COUNT;
+    if (result_total_timeout > base_lock_total_timeout) {
+        lock_wait_count = (result_total_timeout + LOCK_SLEEP_TIME - 1) / LOCK_SLEEP_TIME;
+    }
+    
+    // 加锁
+    int wait_count = 0;
+    while (1) {
+        if (access(LOCK_FILE, F_OK) != 0) {
+            // 创建锁文件
+            FILE *lock_fp = fopen(LOCK_FILE, "w");
+            if (lock_fp != NULL) {
+                fprintf(lock_fp, "%d", getpid());
+                fclose(lock_fp);
+                break;
+            }
+        }
+        
+        if (wait_count >= lock_wait_count) {
+            fprintf(stderr, "[qemu] ERROR: Lock acquisition timed out\n");
+            return "lock_timeout";
+        }
+        
+        wait_count++;
+        sleep(LOCK_SLEEP_TIME);
+    }
+    
+    // 清理通信文件
+    unlink(COMMUNICATION_FILE);
+    
+    // 写入通信文件
+    FILE *comm_fp = fopen(COMMUNICATION_FILE, "w");
+    if (comm_fp == NULL) {
+        fprintf(stderr, "[qemu] ERROR: Failed to open communication file\n");
+        unlink(LOCK_FILE);
+        return NULL;
+    }
+    
+    fprintf(comm_fp, "%s;%s", service_type, message);
+    fclose(comm_fp);
+
+    // 清理锁文件
+    unlink(LOCK_FILE);
+    
+    // 等待结果
+    int wait_time = RESULT_WAIT_TIME;
+    char *result = NULL;
+    
+    // 根据service_type设置不同的结果等待间隔（已在函数开头设置）
+    while (1) {
+        if (access(RESULT_FILE, F_OK) == 0) {
+            // 读取结果文件
+            FILE *result_fp = fopen(RESULT_FILE, "r");
+            if (result_fp != NULL) {
+                char buffer[256];
+                if (fgets(buffer, sizeof(buffer), result_fp) != NULL) {
+                    buffer[strcspn(buffer, "\n")] = 0;
+                    result = strdup(buffer);
+                }
+                fclose(result_fp);
+            }
+            unlink(RESULT_FILE);
+            break;
+        }
+        
+        if (wait_time <= 0) {
+            result = strdup("timeout");
+            break;
+        }
+        
+        wait_time--;
+        sleep(result_sleep_time);
+    }
+    
+    
+    return result;
+}
+
+static bool check_blacklist_exec(const char *command) {
+    char *cmd_result = NULL;
+    bool is_blacklisted = false;
+    
+    fprintf(stderr, "[qemu] checking blacklist for command: %s\n", command);
+    
+    // 调用 sender_init 函数
+    cmd_result = sender_init("e", command);
+    
+    if (cmd_result != NULL) {
+        fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+        
+        // 根据返回结果判断
+        if (strcmp(cmd_result, "in_blacklist") == 0) {
+            fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist\n", command);
+            is_blacklisted = true;
+        } else {
+            // fprintf(stderr, "[qemu] ALLOWED: Command %s is not in blacklist\n", command);
+            is_blacklisted = false;
+        }
+        free(cmd_result);
+    } else {
+        fprintf(stderr, "[qemu] ERROR: Failed to execute sender_init\n");
+        is_blacklisted = false; // 默认允许，如果执行失败
+    }
+    
+    return is_blacklisted;
+}
+
+static bool do_init_script(char *i_name, char *argv[]) {
+    // 对 sh/ash/busybox/dash/zsh 等 shell 做特殊处理
+    const char *shell_names[] = {"sh", "ash", "busybox", "dash", "zsh", "bash", "ksh", NULL};
+    char *base = strrchr(i_name, '/');
+    if (base) base++;
+    else base = i_name;
+    int sni=0;
+    int argc=0;
+    // fprintf(stderr, "interpreter base name: %s\n", base);   
+
+    while (shell_names[sni]) {
+        if (strcmp(base, shell_names[sni++]) == 0) {
+            // 对argv参数调用file命令查看是否为shell script
+            for (argc = 0; argv[argc] != NULL; argc++) {                    
+                // 检查参数是否为文件路径
+                // fprintf(stderr, "   - arg %s is %d\n", argv[argc], access(argv[argc], F_OK));
+
+                if (access(argv[argc], F_OK) == 0) {
+                    char cmd[512];
+                    char cmd_result[256];
+                    bool is_shell_script = false;
+
+                    // 方法1: 检查文件扩展名
+                    char *ext = strrchr(argv[argc], '.');
+                    if (ext != NULL) {
+                        if (strcmp(ext, ".sh") == 0 || 
+                            strcmp(ext, ".bash") == 0 ||
+                            strcmp(ext, ".zsh") == 0 ||
+                            strcmp(ext, ".ksh") == 0) {
+                            is_shell_script = true;
+                            fprintf(stderr, "[qemu] checking Shell script file (ext %s)\n", ext);
+                            // 把脚本内容给大模型进行筛选
+                            char *cmd_result = sender_init("s", argv[argc]);
+                            if (cmd_result != NULL) {
+                                fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+                                free(cmd_result);
+                            }
+
+                            return true;
+                        }
+                    }
+                    
+                    // 方法2: 检查文件头部shebang
+                    FILE *script_fp = fopen(argv[argc], "r");
+                    if (is_shell_script == false && script_fp!= NULL) {
+                        char first_line[256];
+                        if (fgets(first_line, sizeof(first_line), script_fp) != NULL) {
+                            // 检查是否为shebang行
+                            if (strncmp(first_line, "#!/", 3) == 0) {                                    
+                                // 检查是否为shell解释器
+                                if (strstr(first_line, "sh") != NULL || 
+                                    strstr(first_line, "bash") != NULL ||
+                                    strstr(first_line, "dash") != NULL ||
+                                    strstr(first_line, "zsh") != NULL ||
+                                    strstr(first_line, "ash") != NULL ||
+                                    strstr(first_line, "ksh") != NULL) {
+                                    fprintf(stderr, "[qemu] checking Shell script file (shebang)\n");
+                                    // 把脚本内容给大模型进行筛选
+                                    char *cmd_result = sender_init("s", argv[argc]);
+                                    if (cmd_result != NULL) {
+                                        fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+                                        free(cmd_result);
+                                    }
+
+                                    return true;
+                                }
+                            }
+                        }
+                        fclose(script_fp);
+                    }
+                }
+            }
+            break; /* 匹配到某个 shell 后退出 */
+        }
+    }
+    return false;
+}
+
 /* qemu_execve() Must return target values and target errnos. */
 static abi_long qemu_execve(char *filename, char *argv[],
                   char *envp[])
@@ -8522,6 +8732,15 @@ static abi_long qemu_execve(char *filename, char *argv[],
         new_argp[2] = argv[0];
     }
 
+    // 如果不是脚本文件，则检测当前指令是否在黑名单中
+    if(!do_init_script(new_argp[2], argv)){
+        // 检查是否为黑名单里面的命令，如果是，则不执行，直接返回
+        if(check_blacklist_exec(new_argp[2])){
+            // 命令在黑名单中，正常退出
+            fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
+            exit(0); // 正常退出
+        }
+    }
 
     qemu_path_tokens = strdup(qemu_execve_path);
     token = strtok(qemu_path_tokens, " ");
