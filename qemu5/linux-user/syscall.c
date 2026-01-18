@@ -8506,6 +8506,65 @@ static char *sender_init(const char *service_type, const char *message) {
     return result;
 }
 
+static bool check_whitelist_exec(const char *command) {
+    static const char *IMMUTABLE_WHITELIST[] = {
+        "exec", "eval", "source", "unlink",
+        "sh", "bash", "busybox", "dash", "zsh", "ash", "ksh"
+        "ls", "cat", "echo", "cp", "mv", "rm", "mkdir", "rmdir",
+        "cd", "pwd", "grep", "sed", "awk", "head", "tail", "test",
+        "ps", "top", "kill", "chmod", "chown", "chgrp", "expr",
+        "touch", "ln", "find", "xargs", "cut", "sort", "uniq",
+        "wc", "diff", "patch", "tar", "gzip", "gunzip", "zip", "unzip",
+        "date", "time", "sleep", "true", "false", "exit", "[", "[[",
+        "ifconfig", "ip", "route", "ping", "traceroute", "netstat", "arp", "iptables",
+        "telnet", "ssh", "scp", "iwconfig", "iw", "wget", "curl", "nslookup", "dig", "ss", "tc",
+        "ifup", "ifdown", "vconfig", "bridge", "iproute", "netcat", "nc", "tftp", "ftp",
+        "df", "du", "free", "uptime", "uname", "hostname",
+        "nice", "renice", "sysctl", "passwd", "chpasswd", "sysinfo",
+        "fsck", "mkfs", "mke2fs", "mountpoint", "dd", "cpio", "mksquashfs", "unsquashfs", "mkfs.ext3", "mkfs.ext4",
+        "killall", "pgrep", "pkill", "pidof", "nohup", "bg", "fg", "jobs",
+        "vi", "vim", "nano", "ed", "emacs", "less", "more",
+        "opkg", "ipkg", "pkg_add", "pkg_info",
+        "uci", "nmcli", "networkctl", "brctl",
+        "htop", "mpstat", "vmstat", "iostat", "sar", "lsof", "tcpdump",
+        "openssl", "md5sum", "sha1sum", "sha256sum", "sha512sum",
+        "ntpdate", "chronyd", "ntpd", "rdate", "busybox",
+        "xz", "bzip2", "lbzip2", "lzma", "lzip", "zstd",
+        "clear", "history", "which", "whereis", "whoami", "id", "su", "sudo", "reset", "tty",
+        "od", "hexdump", "xxd", "stat", "file", "lshw", "lscpu", "sync", "mdadm", "ntfs-3g",
+        "httpd", "uhttpd", "lighttpd", "jjhttpd", "shttpd", "thttpd", "minihttpd", "mini_httpd",
+        "mini_httpds", "dhttpd", "alphapd", "goahead", "boa", "appweb", "shgw_httpd",
+        "tenda_httpd", "funjsq_httpd", "webs", "hunt_server", "hydra",
+        "miniupnpd", "miniupnpc", "mini_upnpd", "miniupnpd_ap", "miniupnpd_wsc",
+        "upnp", "upnpc", "upnpd", "upnpc-static", "upnprenderer",
+        "bcmupnp", "wscupnpd", "upnp_app", "upnp_igd", "upnp_tv_devices",
+        "ddnsd", "dnsmasq", "udhcpd", "dnsmasq"
+    };
+    
+    // 初始化哈希表（只执行一次）
+    static GHashTable *whitelist_set = NULL;
+    if (whitelist_set == NULL) {
+        whitelist_set = g_hash_table_new(g_str_hash, g_str_equal);
+        for (int i = 0; i < sizeof(IMMUTABLE_WHITELIST) / sizeof(IMMUTABLE_WHITELIST[0]); i++) {
+            g_hash_table_insert(whitelist_set, (gpointer)IMMUTABLE_WHITELIST[i], NULL);
+        }
+    }
+    
+    // 提取命令的基础名称（去掉路径）
+    const char *base = strrchr(command, '/');
+    if (base) base++;
+    else base = command;
+    
+    // 使用哈希表检查命令是否在白名单中
+    bool is_whitelisted = g_hash_table_contains(whitelist_set, base);
+    
+    if (is_whitelisted) {
+        return true;
+    }
+    
+    return false;
+}
+
 static bool check_blacklist_exec(const char *command) {
     char *cmd_result = NULL;
     bool is_blacklisted = false;
@@ -8516,7 +8575,7 @@ static bool check_blacklist_exec(const char *command) {
     cmd_result = sender_init("e", command);
     
     if (cmd_result != NULL) {
-        fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+        // fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
         
         // 根据返回结果判断
         if (strcmp(cmd_result, "in_blacklist") == 0) {
@@ -8537,77 +8596,110 @@ static bool check_blacklist_exec(const char *command) {
 
 static bool do_init_script(char *i_name, char *argv[]) {
     // 对 sh/ash/busybox/dash/zsh 等 shell 做特殊处理
-    const char *shell_names[] = {"sh", "ash", "busybox", "dash", "zsh", "bash", "ksh", NULL};
+    const char *shell_names[] = {"sh", "bash", "busybox", "dash", "zsh", "ash", "ksh", NULL};
     char *base = strrchr(i_name, '/');
     if (base) base++;
     else base = i_name;
     int sni=0;
     int argc=0;
-    // fprintf(stderr, "interpreter base name: %s\n", base);   
+    // fprintf(stderr, "interpreter base name: %s\n", base);
 
     while (shell_names[sni]) {
         if (strcmp(base, shell_names[sni++]) == 0) {
             // 对argv参数调用file命令查看是否为shell script
-            for (argc = 0; argv[argc] != NULL; argc++) {                    
+            for (argc = 0; argv[argc] != NULL; argc++) {
                 // 检查参数是否为文件路径
-                // fprintf(stderr, "   - arg %s is %d\n", argv[argc], access(argv[argc], F_OK));
+                // fprintf(stderr, "   - arg %s\n", argv[argc]);
 
-                if (access(argv[argc], F_OK) == 0) {
-                    char cmd[512];
-                    char cmd_result[256];
-                    bool is_shell_script = false;
+                char *base_name = strrchr(argv[argc], '/');
+                if (base_name) base_name++;
+                else base_name = argv[argc];
 
-                    // 方法1: 检查文件扩展名
-                    char *ext = strrchr(argv[argc], '.');
-                    if (ext != NULL) {
-                        if (strcmp(ext, ".sh") == 0 || 
-                            strcmp(ext, ".bash") == 0 ||
-                            strcmp(ext, ".zsh") == 0 ||
-                            strcmp(ext, ".ksh") == 0) {
-                            is_shell_script = true;
-                            fprintf(stderr, "[qemu] checking Shell script file (ext %s)\n", ext);
-                            // 把脚本内容给大模型进行筛选
-                            char *cmd_result = sender_init("s", argv[argc]);
-                            if (cmd_result != NULL) {
-                                fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
-                                free(cmd_result);
-                            }
-
-                            return true;
-                        }
-                    }
-                    
-                    // 方法2: 检查文件头部shebang
-                    FILE *script_fp = fopen(argv[argc], "r");
-                    if (is_shell_script == false && script_fp!= NULL) {
-                        char first_line[256];
-                        if (fgets(first_line, sizeof(first_line), script_fp) != NULL) {
-                            // 检查是否为shebang行
-                            if (strncmp(first_line, "#!/", 3) == 0) {                                    
-                                // 检查是否为shell解释器
-                                if (strstr(first_line, "sh") != NULL || 
-                                    strstr(first_line, "bash") != NULL ||
-                                    strstr(first_line, "dash") != NULL ||
-                                    strstr(first_line, "zsh") != NULL ||
-                                    strstr(first_line, "ash") != NULL ||
-                                    strstr(first_line, "ksh") != NULL) {
-                                    fprintf(stderr, "[qemu] checking Shell script file (shebang)\n");
-                                    // 把脚本内容给大模型进行筛选
-                                    char *cmd_result = sender_init("s", argv[argc]);
-                                    if (cmd_result != NULL) {
-                                        fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
-                                        free(cmd_result);
-                                    }
-
-                                    return true;
-                                }
-                            }
-                        }
-                        fclose(script_fp);
+                // sh、bash 等 shell 执行器则跳过， 以-开头的参数也跳过
+                // fprintf(stderr, "checking shell Executor\n");
+                static const char *skip_shells[] = {"sh", "bash", "busybox", "dash", "zsh", "ash", "ksh", NULL};
+                int skip = 0;
+                // 检查是否为 shell 执行器
+                for (int i = 0; skip_shells[i]; i++) {
+                    if (strcmp(base_name, skip_shells[i]) == 0) {
+                        skip = 1;
+                        break;
                     }
                 }
+                // 检查是否以 -c 开头
+                if (skip || argv[argc][0] == '-') {
+                    continue;
+                }
+
+                // 检查文件是否在名单中（忽略大小写）
+                // fprintf(stderr, "checking if on the whitelist\n");
+                static const char *whitelist[] = {"rcS", "rc", "profile", NULL};
+                int wli = 0;
+                while (whitelist[wli]) {
+                    if (strcasecmp(base_name, whitelist[wli++]) == 0) {
+                        char *cmd_result = sender_init("s", argv[argc]);
+                        if (cmd_result != NULL) {
+                            fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+                            free(cmd_result);
+                        }
+                        return true;
+                    }
+                }
+
+                bool is_shell_script = false;
+                // 方法1: 检查文件扩展名
+                char *ext = strrchr(argv[argc], '.');
+                // fprintf(stderr, "checking file extension: %s\n", ext);
+                if (ext != NULL) {
+                    if (strcmp(ext, ".sh") == 0 || 
+                        strcmp(ext, ".bash") == 0 ||
+                        strcmp(ext, ".zsh") == 0 ||
+                        strcmp(ext, ".ksh") == 0) {
+                        is_shell_script = true;
+                        fprintf(stderr, "[qemu] checking Shell script file (ext %s)\n", ext);
+                        // 把脚本内容给大模型进行筛选
+                        char *cmd_result = sender_init("s", argv[argc]);
+                        if (cmd_result != NULL) {
+                            fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+                            free(cmd_result);
+                        }
+                        return true;
+                    }
+                }
+                
+                // 方法2: 检查文件头部shebang
+                // fprintf(stderr, "checking shebang\n");
+                if (is_shell_script == false && access(argv[argc], F_OK) == 0) {
+                    FILE *script_fp = fopen(argv[argc], "r");
+                    if (script_fp == NULL){
+                        continue;
+                    } 
+                    char first_line[256];
+                    if (fgets(first_line, sizeof(first_line), script_fp) != NULL) {
+                        // 检查是否为shebang行
+                        if (strncmp(first_line, "#!/", 3) == 0) {                                       
+                            // 检查是否为shell解释器
+                            if (strstr(first_line, "sh") != NULL || 
+                                strstr(first_line, "bash") != NULL ||
+                                strstr(first_line, "dash") != NULL ||
+                                strstr(first_line, "zsh") != NULL ||
+                                strstr(first_line, "ash") != NULL ||
+                                strstr(first_line, "ksh") != NULL) {
+                                fprintf(stderr, "[qemu] checking Shell script file (shebang)\n");
+                                // 把脚本内容给大模型进行筛选
+                                char *cmd_result = sender_init("s", argv[argc]);
+                                if (cmd_result != NULL) {
+                                    fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+                                    free(cmd_result);
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                    fclose(script_fp);
+                }
             }
-            break; /* 匹配到某个 shell 后退出 */
+            break;
         }
     }
     return false;
@@ -8732,12 +8824,12 @@ static abi_long qemu_execve(char *filename, char *argv[],
         new_argp[2] = argv[0];
     }
 
-    // 如果不是脚本文件，则检测当前指令是否在黑名单中
-    if(!do_init_script(new_argp[2], argv)){
+    // 如果命令在白名单中则直接执行
+    if(!do_init_script(new_argp[2], argv) && !check_whitelist_exec(new_argp[2])){
         // 检查是否为黑名单里面的命令，如果是，则不执行，直接返回
         if(check_blacklist_exec(new_argp[2])){
-            // 命令在黑名单中，正常退出
-            fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
+            // // 命令在黑名单中，正常退出
+            // fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
             exit(0); // 正常退出
         }
     }
