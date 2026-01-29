@@ -269,6 +269,7 @@ enum {
 };
 
 TargetFdTrans **target_fd_trans;
+char **target_fd_path;
 QemuMutex target_fd_trans_lock;
 unsigned int target_fd_max;
 

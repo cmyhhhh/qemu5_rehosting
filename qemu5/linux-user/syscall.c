@@ -8275,8 +8275,17 @@ static int do_openat(void *cpu_env, int dirfd, const char *pathname, int flags, 
 
         return fd;
     }
-
-    return safe_openat(dirfd, path(pathname), flags, mode);
+    // FirmAgent Patch
+    ret = safe_openat(dirfd, path(pathname), flags, mode);
+    /* If opening /dev or /fadev failed, force success */
+    if (ret < 0 && (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/fadev") == 0)) {
+        ret = 0; /* Return a valid file descriptor */
+    }
+    /* Register file path for the file descriptor */
+    if (ret >= 0) {
+        fd_trans_register_path(ret, pathname);
+    }
+    return ret;
 }
 
 #define TIMER_MAGIC 0x0caf0000
@@ -9066,8 +9075,21 @@ static abi_long do_syscall1(void *cpu_env, int num, abi_long arg1,
             if (!(p = lock_user(VERIFY_WRITE, arg2, arg3, 0)))
                 return -TARGET_EFAULT;
             ret = get_errno(safe_read(arg1, p, arg3));
-            if (ret >= 0 &&
-                fd_trans_host_to_target_data(arg1)) {
+            if (ret < 0) {
+                /* Check if reading from /dev or /fadev/ */
+                const char *path = fd_trans_get_path(arg1);
+                if (path) {
+                    if (strcmp(path, "/dev") == 0 || strncmp(path, "/fadev", 6) == 0) {
+                        /* Random fill up to 4k */
+                        size_t fill_size = arg3 > 4096 ? 4096 : arg3;
+                        unsigned char *buf = (unsigned char *)p;
+                        for (size_t i = 0; i < fill_size; i++) {
+                            buf[i] = rand() % 256;
+                        }
+                        ret = fill_size;
+                    }
+                }
+            } else if (fd_trans_host_to_target_data(arg1)) {
                 ret = fd_trans_host_to_target_data(arg1)(p, ret);
             }
             unlock_user(p, arg2, ret);

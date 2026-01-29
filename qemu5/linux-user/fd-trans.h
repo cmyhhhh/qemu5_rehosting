@@ -27,6 +27,7 @@ typedef struct TargetFdTrans {
 } TargetFdTrans;
 
 extern TargetFdTrans **target_fd_trans;
+extern char **target_fd_path;
 extern QemuMutex target_fd_trans_lock;
 
 extern unsigned int target_fd_max;
@@ -34,6 +35,9 @@ extern unsigned int target_fd_max;
 static inline void fd_trans_init(void)
 {
     qemu_mutex_init(&target_fd_trans_lock);
+    target_fd_trans = NULL;
+    target_fd_path = NULL;
+    target_fd_max = 0;
 }
 
 static inline TargetFdDataFunc fd_trans_target_to_host_data(int fd)
@@ -101,6 +105,10 @@ static inline void internal_fd_trans_unregister_unsafe(int fd)
 {
     if (fd >= 0 && fd < target_fd_max) {
         target_fd_trans[fd] = NULL;
+        if (target_fd_path[fd]) {
+            g_free(target_fd_path[fd]);
+            target_fd_path[fd] = NULL;
+        }
     }
 }
 
@@ -121,6 +129,72 @@ static inline void fd_trans_dup(int oldfd, int newfd)
     if (oldfd < target_fd_max && target_fd_trans[oldfd]) {
         internal_fd_trans_register_unsafe(newfd, target_fd_trans[oldfd]);
     }
+    if (oldfd < target_fd_max && target_fd_path[oldfd]) {
+        if (newfd >= target_fd_max) {
+            unsigned int oldmax = target_fd_max;
+            target_fd_max = ((newfd >> 6) + 1) << 6;
+            target_fd_path = g_renew(char *, target_fd_path, target_fd_max);
+            memset((void *)(target_fd_path + oldmax), 0, 
+                   (target_fd_max - oldmax) * sizeof(char *));
+        }
+        target_fd_path[newfd] = g_strdup(target_fd_path[oldfd]);
+    }
+}
+
+static inline void internal_fd_trans_register_path_unsafe(int fd, const char *path)
+{
+    if (fd >= target_fd_max) {
+        unsigned int oldmax = target_fd_max;
+        target_fd_max = ((fd >> 6) + 1) << 6;
+        target_fd_path = g_renew(char *, target_fd_path, target_fd_max);
+        memset((void *)(target_fd_path + oldmax), 0, 
+               (target_fd_max - oldmax) * sizeof(char *));
+    }
+    if (target_fd_path[fd]) {
+        g_free(target_fd_path[fd]);
+    }
+    target_fd_path[fd] = path ? g_strdup(path) : NULL;
+}
+
+static inline void fd_trans_register_path(int fd, const char *path)
+{
+    if (fd < 0) {
+        return;
+    }
+
+    QEMU_LOCK_GUARD(&target_fd_trans_lock);
+    internal_fd_trans_register_path_unsafe(fd, path);
+}
+
+static inline const char *fd_trans_get_path(int fd)
+{
+    if (fd < 0) {
+        return NULL;
+    }
+
+    QEMU_LOCK_GUARD(&target_fd_trans_lock);
+    if (fd < target_fd_max && target_fd_path[fd]) {
+        return target_fd_path[fd];
+    }
+    return NULL;
+}
+
+static inline void internal_fd_trans_unregister_path_unsafe(int fd)
+{
+    if (fd >= 0 && fd < target_fd_max && target_fd_path[fd]) {
+        g_free(target_fd_path[fd]);
+        target_fd_path[fd] = NULL;
+    }
+}
+
+static inline void fd_trans_unregister_path(int fd)
+{
+    if (fd < 0) {
+        return;
+    }
+
+    QEMU_LOCK_GUARD(&target_fd_trans_lock);
+    internal_fd_trans_unregister_path_unsafe(fd);
 }
 
 extern TargetFdTrans target_packet_trans;
