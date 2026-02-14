@@ -367,7 +367,7 @@ static void handle_arg_hacksysinfo(const char *arg)
 
 static void handle_arg_pconly(const char *arg)
 {
-    // fprintf(stderr, "[FirmAgentQEMU] handle_arg_pconly\n");
+    // fprintf(stderr, "[GreenHouseQEMU] handle_arg_pconly\n");
     program_code_only = 1;
 }
 // GREENHOUSE PATCH END

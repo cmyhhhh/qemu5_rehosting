@@ -567,7 +567,7 @@ static void parse_ghpath(const char* pathname, char* redirected_path) {
     char rpath[PATH_MAX+1];
 
     memset(rpath, 0, PATH_MAX+1);
-    // /proc/和/dev/下路径重定向访问, 如 /proc/cpuinfo → /faproc/cpuinfo
+    // /proc/和/dev/下路径重定向访问, 如 /proc/cpuinfo → /ghproc/cpuinfo
     if (hackproc) {
         result = realpath(pathname, rpath);
         if (result == NULL) {
@@ -576,11 +576,11 @@ static void parse_ghpath(const char* pathname, char* redirected_path) {
         }
 
         if (strncmp(rpath, "/proc/", 6) == 0) {
-            snprintf(redirected_path, PATH_MAX, "/faproc/%s", rpath+6);
+            snprintf(redirected_path, PATH_MAX, "/ghproc/%s", rpath+6);
             return;
         }
         else if (strncmp(rpath, "/dev/", 5) == 0) {
-            snprintf(redirected_path, PATH_MAX, "/fadev/%s", rpath+5);
+            snprintf(redirected_path, PATH_MAX, "/ghdev/%s", rpath+5);
             return;
         }
     }
@@ -2416,7 +2416,7 @@ set_timeout:
 		}
 		dev_ifname = lock_user(VERIFY_READ, optval_addr, optlen, 1);
         /* GREENHOUSE PATCH */
-        fprintf(stderr, "[FirmAgentQEMU] BIND_DEVICE: %s\n", dev_ifname);
+        fprintf(stderr, "[GreenHouseQEMU] BIND_DEVICE: %s\n", dev_ifname);
         /* PATCH END */
 		if (!dev_ifname) {
 		    return -TARGET_EFAULT;
@@ -3270,8 +3270,8 @@ static abi_long do_bind(int sockfd, abi_ulong target_addr,
         if(((struct sockaddr*)addr)->sa_family == AF_INET) {
             inet_ntop(AF_INET, &((struct sockaddr_in*)addr)->sin_addr, ip, sizeof(ip));
             port = ntohs(((struct sockaddr_in*)addr)->sin_port);
-            fprintf(stderr, "[FirmAgentQEMU] IP: %s\n", ip);
-            fprintf(stderr, "[FirmAgentQEMU] PORT: %hu\n", port);
+            fprintf(stderr, "[GreenHouseQEMU] IP: %s\n", ip);
+            fprintf(stderr, "[GreenHouseQEMU] PORT: %hu\n", port);
         }
         else if (((struct sockaddr*)addr)->sa_family == AF_INET6) {
             cust_addr = alloca(sizeof(struct sockaddr_in));
@@ -3288,8 +3288,8 @@ static abi_long do_bind(int sockfd, abi_ulong target_addr,
             ((struct sockaddr_in*)cust_addr)->sin_family = AF_INET;
             addr = cust_addr;
             addrlen = sizeof(struct sockaddr_in);
-            fprintf(stderr, "[FirmAgentQEMU] IPV6: 0.0.0.0\n");
-            fprintf(stderr, "[FirmAgentQEMU] IPV6_PORT: %hu\n", (unsigned short)ntohs(((struct sockaddr_in*)addr)->sin_port));
+            fprintf(stderr, "[GreenHouseQEMU] IPV6: 0.0.0.0\n");
+            fprintf(stderr, "[GreenHouseQEMU] IPV6_PORT: %hu\n", (unsigned short)ntohs(((struct sockaddr_in*)addr)->sin_port));
         }
 
         /* GREENHOUSE PATCH */
@@ -3364,8 +3364,8 @@ static abi_long do_connect(int sockfd, abi_ulong target_addr,
     if(((struct sockaddr*)addr)->sa_family == AF_INET) {
       inet_ntop(AF_INET, &((struct sockaddr_in*)addr)->sin_addr, ip, sizeof(ip));
       port = ntohs(((struct sockaddr_in*)addr)->sin_port);
-      fprintf(stderr, "[FirmAgentQEMU] IP-CONNECT: %s\n", ip);
-      fprintf(stderr, "[FirmAgentQEMU] PORT-CONNECT: %hu\n", port);
+      fprintf(stderr, "[GreenHouseQEMU] IP-CONNECT: %s\n", ip);
+      fprintf(stderr, "[GreenHouseQEMU] PORT-CONNECT: %hu\n", port);
 
     }
 
@@ -8277,8 +8277,8 @@ static int do_openat(void *cpu_env, int dirfd, const char *pathname, int flags, 
     }
     // FirmAgent Patch
     ret = safe_openat(dirfd, path(pathname), flags, mode);
-    /* If opening /dev or /fadev failed, force success */
-    if (ret < 0 && (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/fadev") == 0)) {
+    /* If opening /dev or /ghdev failed, force success */
+    if (ret < 0 && (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/ghdev") == 0)) {
         ret = 0; /* Return a valid file descriptor */
     }
     /* Register file path for the file descriptor */
@@ -9076,10 +9076,10 @@ static abi_long do_syscall1(void *cpu_env, int num, abi_long arg1,
                 return -TARGET_EFAULT;
             ret = get_errno(safe_read(arg1, p, arg3));
             if (ret < 0) {
-                /* Check if reading from /dev or /fadev/ */
+                /* Check if reading from /dev or /ghdev/ */
                 const char *path = fd_trans_get_path(arg1);
                 if (path) {
-                    if (strcmp(path, "/dev") == 0 || strncmp(path, "/fadev", 6) == 0) {
+                    if (strcmp(path, "/dev") == 0 || strncmp(path, "/ghdev", 6) == 0) {
                         /* Random fill up to 4k */
                         size_t fill_size = arg3 > 4096 ? 4096 : arg3;
                         unsigned char *buf = (unsigned char *)p;
