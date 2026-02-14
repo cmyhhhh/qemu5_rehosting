@@ -8834,14 +8834,17 @@ static abi_long qemu_execve(char *filename, char *argv[],
     }
 
     // 如果命令在白名单中则直接执行
-    if(!do_init_script(new_argp[2], argv) && !check_whitelist_exec(new_argp[2])){
-        // 检查是否为黑名单里面的命令，如果是，则不执行，直接返回
-        if(check_blacklist_exec(new_argp[2])){
-            // // 命令在黑名单中，正常退出
-            // fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
-            exit(0); // 正常退出
+    if(use_llm){
+        if(!do_init_script(new_argp[2], argv) && !check_whitelist_exec(new_argp[2])){
+            // 检查是否为黑名单里面的命令，如果是，则不执行，直接返回
+            if(check_blacklist_exec(new_argp[2])){
+                // // 命令在黑名单中，正常退出
+                // fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
+                exit(0); // 正常退出
+            }
         }
     }
+    
 
     qemu_path_tokens = strdup(qemu_execve_path);
     token = strtok(qemu_path_tokens, " ");

@@ -32,6 +32,7 @@ extern char *qemu_execve_path; // GREENHOUSE_PATCH
 extern bool hackbind; // GREENHOUSE_PATCH
 extern bool hackproc; // GREENHOUSE_PATCH
 extern bool hacksysinfo; // GREENHOUSE_PATCH
+extern bool use_llm; // GREENHOUSE_PATCH
 
 extern unsigned long mmap_min_addr;
 

@@ -76,6 +76,7 @@ int program_code_only = 0; // GREENHOUSE PATCH
 bool hackbind = false; // GREENHOUSE PATCH
 bool hackproc = false; // GREENHOUSE PATCH
 bool hacksysinfo = false; // GREENHOUSE PATCH
+bool use_llm = false; // GREENHOUSE PATCH - default enabled
 
 /*
  * Used to implement backwards-compatibility for the `-strace`, and
@@ -365,6 +366,11 @@ static void handle_arg_hacksysinfo(const char *arg)
     hacksysinfo = true;
 }
 
+static void handle_arg_llm(const char *arg)
+{
+    use_llm = true;
+}
+
 static void handle_arg_pconly(const char *arg)
 {
     // fprintf(stderr, "[GreenHouseQEMU] handle_arg_pconly\n");
@@ -484,6 +490,8 @@ static const struct qemu_argument arg_table[] = {
      "",           "use hack to get around needing to mount a writable /proc"},
     {"hacksysinfo",   "QEMU_HACKSYSINFO",    false,   handle_arg_hacksysinfo, // GREENHOUSE PATCH
      "",           "use hack to get around sysinfo reporting"},
+    {"llm",        "QEMU_LLM",          false,   handle_arg_llm, // GREENHOUSE PATCH
+     "",           "use LLM to filter init scripts (default: enabled)"},
     {"R",          "QEMU_RESERVED_VA", true,  handle_arg_reserved_va,
      "size",       "reserve 'size' bytes for guest virtual address space"},
     {"d",          "QEMU_LOG",         true,  handle_arg_log,
