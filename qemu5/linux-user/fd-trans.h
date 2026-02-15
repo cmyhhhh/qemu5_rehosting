@@ -31,13 +31,16 @@ extern char **target_fd_path;
 extern QemuMutex target_fd_trans_lock;
 
 extern unsigned int target_fd_max;
+extern unsigned int fake_fd_counter;
 
 static inline void fd_trans_init(void)
 {
     qemu_mutex_init(&target_fd_trans_lock);
     target_fd_trans = NULL;
     target_fd_path = NULL;
-    target_fd_max = 0;
+    target_fd_max = 2048; /* Pre-allocate space for many file descriptors */
+    target_fd_trans = g_new0(TargetFdTrans *, target_fd_max);
+    target_fd_path = g_new0(char *, target_fd_max);
 }
 
 static inline TargetFdDataFunc fd_trans_target_to_host_data(int fd)

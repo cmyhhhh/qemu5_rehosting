@@ -8277,12 +8277,16 @@ static int do_openat(void *cpu_env, int dirfd, const char *pathname, int flags, 
     }
     // FirmAgent Patch
     ret = safe_openat(dirfd, path(pathname), flags, mode);
-    /* If opening /dev or /ghdev failed, force success */
-    if (ret < 0 && (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/ghdev") == 0)) {
-        ret = 0; /* Return a valid file descriptor */
-    }
-    /* Register file path for the file descriptor */
-    if (ret >= 0) {
+    /* Always use fake FD for /dev and /ghdev paths */
+    if (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/ghdev") == 0 || 
+        strncmp(pathname, "/dev/", 5) == 0 || strncmp(pathname, "/ghdev/", 7) == 0) {
+        if (ret >= 0) {
+            close(ret); // Close the real FD if opened successfully
+        }
+        ret = fake_fd_counter++; /* Return a unique fake file descriptor */
+        fd_trans_register_path(ret, pathname);
+    } else if (ret >= 0) {
+        /* Register file path for real FDs */
         fd_trans_register_path(ret, pathname);
     }
     return ret;
@@ -8844,7 +8848,6 @@ static abi_long qemu_execve(char *filename, char *argv[],
             }
         }
     }
-    
 
     qemu_path_tokens = strdup(qemu_execve_path);
     token = strtok(qemu_path_tokens, " ");
@@ -9079,17 +9082,32 @@ static abi_long do_syscall1(void *cpu_env, int num, abi_long arg1,
                 return -TARGET_EFAULT;
             ret = get_errno(safe_read(arg1, p, arg3));
             if (ret < 0) {
-                /* Check if reading from /dev or /ghdev/ */
-                const char *path = fd_trans_get_path(arg1);
-                if (path) {
-                    if (strcmp(path, "/dev") == 0 || strncmp(path, "/ghdev", 6) == 0) {
-                        /* Random fill up to 4k */
-                        size_t fill_size = arg3 > 4096 ? 4096 : arg3;
-                        unsigned char *buf = (unsigned char *)p;
-                        for (size_t i = 0; i < fill_size; i++) {
-                            buf[i] = rand() % 256;
+                /* Check if reading from fake FD (10000+) */
+                if (arg1 >= 10000) {
+                    /* Random fill with requested size (up to 16MB) */
+                    size_t fill_size = arg3;
+                    if (fill_size > 16 * 1024 * 1024) { /* 16MB limit */
+                        fill_size = 16 * 1024 * 1024;
+                    }
+                    unsigned char *buf = (unsigned char *)p;
+                    for (size_t i = 0; i < fill_size; i++) {
+                        buf[i] = rand() % 256;
+                    }
+                    ret = fill_size;
+                } else {
+                    /* Check if reading from /dev or /ghdev/ */
+                    const char *path = fd_trans_get_path(arg1);
+                    if (path) {
+                        if (strcmp(path, "/dev") == 0 || strcmp(path, "/ghdev") == 0 || 
+                            strncmp(path, "/dev/", 5) == 0 || strncmp(path, "/ghdev/", 7) == 0) {
+                            /* Random fill up to 4k */
+                            size_t fill_size = arg3 > 4096 ? 4096 : arg3;
+                            unsigned char *buf = (unsigned char *)p;
+                            for (size_t i = 0; i < fill_size; i++) {
+                                buf[i] = rand() % 256;
+                            }
+                            ret = fill_size;
                         }
-                        ret = fill_size;
                     }
                 }
             } else if (fd_trans_host_to_target_data(arg1)) {
