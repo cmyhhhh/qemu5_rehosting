@@ -149,6 +149,9 @@ static inline void internal_fd_trans_register_path_unsafe(int fd, const char *pa
     if (fd >= target_fd_max) {
         unsigned int oldmax = target_fd_max;
         target_fd_max = ((fd >> 6) + 1) << 6;
+        target_fd_trans = g_renew(TargetFdTrans *, target_fd_trans, target_fd_max);
+        memset((void *)(target_fd_trans + oldmax), 0, 
+               (target_fd_max - oldmax) * sizeof(TargetFdTrans *));
         target_fd_path = g_renew(char *, target_fd_path, target_fd_max);
         memset((void *)(target_fd_path + oldmax), 0, 
                (target_fd_max - oldmax) * sizeof(char *));

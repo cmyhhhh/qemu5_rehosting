@@ -9180,6 +9180,10 @@ static abi_long do_syscall1(void *cpu_env, int num, abi_long arg1,
         }
 
         fd_trans_unregister(arg1);
+        /* Skip close for fake FDs (10000+) */
+        if (arg1 >= 10000) {
+            return 0;
+        }
         return get_errno(close(arg1));
 
     case TARGET_NR_brk:
