@@ -22,6 +22,7 @@
 #include "qemu/path.h"
 #include "qemu/memfd.h"
 #include "qemu/queue.h"
+#include <stdlib.h>
 #include <elf.h>
 #include <endian.h>
 #include <grp.h>
@@ -8275,19 +8276,75 @@ static int do_openat(void *cpu_env, int dirfd, const char *pathname, int flags, 
 
         return fd;
     }
-    // FirmAgent Patch
     ret = safe_openat(dirfd, path(pathname), flags, mode);
-    /* Always use fake FD for /dev and /ghdev paths */
-    if (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/ghdev") == 0 || 
-        strncmp(pathname, "/dev/", 5) == 0 || strncmp(pathname, "/ghdev/", 7) == 0) {
-        if (ret >= 0) {
-            close(ret); // Close the real FD if opened successfully
-        }
-        ret = fake_fd_counter++; /* Return a unique fake file descriptor */
-        fd_trans_register_path(ret, pathname);
-    } else if (ret >= 0) {
+    
+    /* Check if it's a /dev or /ghdev path */
+    int is_dev_path = (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/ghdev") == 0 || 
+                      strncmp(pathname, "/dev/", 5) == 0 || strncmp(pathname, "/ghdev/", 7) == 0);
+    
+    if (ret >= 0) {
         /* Register file path for real FDs */
         fd_trans_register_path(ret, pathname);
+    } else if (is_dev_path) {
+        /* If open failed for /dev or /ghdev path, create a temporary file with random data and open it */
+        const char *tmpdir = getenv("TMPDIR");
+        if (!tmpdir) {
+            tmpdir = "/tmp";
+        }
+        char filename[PATH_MAX];
+        int fd;
+        
+        /* Create predictable filename based on the original path */
+        /* Replace slashes with underscores to create a valid filename */
+        char sanitized_path[PATH_MAX];
+        int i, j;
+        for (i = 0, j = 0; pathname[i] && j < sizeof(sanitized_path) - 1; i++) {
+            if (pathname[i] == '/') {
+                sanitized_path[j++] = '_';
+            } else {
+                sanitized_path[j++] = pathname[i];
+            }
+        }
+        sanitized_path[j] = '\0';
+        
+        snprintf(filename, sizeof(filename), "%s/qemu-open-fallback%s", tmpdir, sanitized_path);
+        
+        /* Try to open existing file first */
+        fd = open(filename, O_RDWR);
+        if (fd < 0) {
+            /* If file doesn't exist, create it with random data */
+            fd = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
+            if (fd >= 0) {
+                /* Write 16MB of random data to the file */
+                const size_t buffer_size = 4096;
+                const size_t total_size = 16 * 1024 * 1024; /* 16MB */
+                char random_data[buffer_size];
+                size_t written = 0;
+                
+                while (written < total_size) {
+                    size_t chunk_size = (total_size - written) < buffer_size ? (total_size - written) : buffer_size;
+                    int k;
+                    for (k = 0; k < chunk_size; k++) {
+                        random_data[k] = rand() % 256;
+                    }
+                    ssize_t bytes_written = write(fd, random_data, chunk_size);
+                    if (bytes_written <= 0) {
+                        break;
+                    }
+                    written += bytes_written;
+                }
+                lseek(fd, 0, SEEK_SET);
+            }
+        } else {
+            /* If file exists, just seek to the beginning */
+            lseek(fd, 0, SEEK_SET);
+        }
+        
+        if (fd >= 0) {
+            /* Register the fallback file path */
+            fd_trans_register_path(fd, pathname);
+            ret = fd;
+        }
     }
     return ret;
 }

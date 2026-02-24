@@ -272,7 +272,6 @@ TargetFdTrans **target_fd_trans;
 char **target_fd_path;
 QemuMutex target_fd_trans_lock;
 unsigned int target_fd_max;
-unsigned int fake_fd_counter = 10000; /* Start fake FDs from 10000 to avoid conflict with real FDs */
 
 static void tswap_nlmsghdr(struct nlmsghdr *nlh)
 {

@@ -31,7 +31,6 @@ extern char **target_fd_path;
 extern QemuMutex target_fd_trans_lock;
 
 extern unsigned int target_fd_max;
-extern unsigned int fake_fd_counter;
 
 static inline void fd_trans_init(void)
 {

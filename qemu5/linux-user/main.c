@@ -491,7 +491,7 @@ static const struct qemu_argument arg_table[] = {
     {"hacksysinfo",   "QEMU_HACKSYSINFO",    false,   handle_arg_hacksysinfo, // GREENHOUSE PATCH
      "",           "use hack to get around sysinfo reporting"},
     {"llm",        "QEMU_LLM",          false,   handle_arg_llm, // GREENHOUSE PATCH
-     "",           "use LLM to filter init scripts (default: enabled)"},
+     "",           "use LLM to filter init scripts (default: disenabled)"},
     {"R",          "QEMU_RESERVED_VA", true,  handle_arg_reserved_va,
      "size",       "reserve 'size' bytes for guest virtual address space"},
     {"d",          "QEMU_LOG",         true,  handle_arg_log,
