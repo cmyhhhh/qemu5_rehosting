@@ -153,6 +153,53 @@ int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
             retval = load_flt_binary(bprm, infop);
 #endif
         } else {
+            // No shebang, try to execute with /bin/sh
+            const char *shell = "/bin/sh";
+            int shell_fd = open(shell, O_RDONLY);
+            if (shell_fd >= 0) {
+                struct linux_binprm shell_bprm;
+                struct image_info shell_info;
+                char *shell_argv[3];
+                
+                // Initialize shell arguments
+                shell_argv[0] = (char *)shell;
+                shell_argv[1] = bprm->filename;
+                shell_argv[2] = NULL;
+                
+                // Initialize shell_bprm
+                memset(&shell_bprm, 0, sizeof(struct linux_binprm));
+                shell_bprm.fd = shell_fd;
+                shell_bprm.filename = (char *)shell;
+                shell_bprm.argc = 2;
+                shell_bprm.argv = shell_argv;
+                shell_bprm.envc = bprm->envc;
+                shell_bprm.envp = bprm->envp;
+                
+                // Initialize shell_info
+                memset(&shell_info, 0, sizeof(struct image_info));
+                
+                // Try to load the shell
+                int shell_retval = prepare_binprm(&shell_bprm);
+                if (shell_retval >= 0) {
+                    if (shell_bprm.buf[0] == 0x7f
+                            && shell_bprm.buf[1] == 'E'
+                            && shell_bprm.buf[2] == 'L'
+                            && shell_bprm.buf[3] == 'F') {
+                        shell_retval = load_elf_binary(&shell_bprm, &shell_info);
+                        if (shell_retval >= 0) {
+                            // Success, copy shell_info to infop
+                            memcpy(infop, &shell_info, sizeof(struct image_info));
+                            // Update bprm to point to shell's bprm
+                            *bprm = shell_bprm;
+                            // Initialize registers for shell
+                            do_init_thread(regs, infop);
+                            close(shell_fd);
+                            return shell_retval;
+                        }
+                    }
+                }
+                close(shell_fd);
+            }
             return -ENOEXEC;
         }
     }

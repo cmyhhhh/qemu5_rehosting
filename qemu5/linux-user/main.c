@@ -883,8 +883,7 @@ int main(int argc, char **argv, char **envp)
 
     fd_trans_init();
 
-    ret = loader_exec(execfd, exec_path, target_argv, target_environ, regs,
-        info, &bprm);
+    ret = loader_exec(execfd, exec_path, target_argv, target_environ, regs, info, &bprm);
     if (ret != 0) {
         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
         _exit(EXIT_FAILURE);

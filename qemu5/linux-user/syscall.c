@@ -8845,7 +8845,7 @@ static abi_long qemu_execve(char *filename, char *argv[],
             return -ENOEXEC; /* No interpreter name found */
         }
         // 找到执行程序名称i_name，继续查找其参数i_arg
-        i_name = cp;
+        i_name = strdup(cp);
         i_arg = NULL;
         for ( ; *cp && (*cp != ' ') && (*cp != '\t'); cp++) {
             /* nothing */ ;
@@ -8854,7 +8854,7 @@ static abi_long qemu_execve(char *filename, char *argv[],
             *cp++ = '\0';
         }
         if (*cp) {
-            i_arg = cp;
+            i_arg = strdup(cp);
         }
 
         if (i_arg) {
