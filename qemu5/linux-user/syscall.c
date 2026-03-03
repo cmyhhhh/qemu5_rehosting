@@ -8869,8 +8869,8 @@ static abi_long qemu_execve(char *filename, char *argv[],
     qemu_path = strdup(token); // 第一个参数是qemu所在位置
     token = strtok(NULL, " "); // 取出下一个参数
     while (token != NULL) { // 统计除qemu外的参数
-        token = strtok(NULL, " ");
         tokCount += 1;
+        token = strtok(NULL, " ");
     }
     offset += 2 + tokCount; // 加上-execve需要的offset
 
