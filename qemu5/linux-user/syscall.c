@@ -8282,6 +8282,13 @@ static int do_openat(void *cpu_env, int dirfd, const char *pathname, int flags, 
     int is_dev_path = (strcmp(pathname, "/dev") == 0 || strcmp(pathname, "/ghdev") == 0 || 
                       strncmp(pathname, "/dev/", 5) == 0 || strncmp(pathname, "/ghdev/", 7) == 0);
     
+    /* Check if it's an MTD device path */
+    int is_mtd_device = strncmp(pathname, "/dev/mtd", 8) == 0;
+    
+    if (is_mtd_device) {
+        fprintf(stderr, "[qemu] Detected MTD device path: %s\n", pathname);
+    }
+    
     if (ret >= 0) {
         /* Register file path for real FDs */
         fd_trans_register_path(ret, pathname);
@@ -10912,7 +10919,43 @@ static abi_long do_syscall1(void *cpu_env, int num, abi_long arg1,
 #ifdef TARGET_NR_fstat
     case TARGET_NR_fstat:
         {
-            ret = get_errno(fstat(arg1, &st));
+            /* Check if it's an MTD device */
+            fprintf(stderr, "[qemu] fstat called for fd: %d\n", arg1);
+            
+            // 直接检查文件描述符是否是MTD设备
+            // 我们知道MTD设备的临时文件大小是16MB
+            struct stat temp_st;
+            if (fstat(arg1, &temp_st) == 0 && temp_st.st_size == 0x1000000) {
+                // 检查文件是否是我们创建的临时文件
+                char proc_path[64];
+                char link_path[PATH_MAX];
+                ssize_t len;
+                
+                snprintf(proc_path, sizeof(proc_path), "/proc/self/fd/%d", arg1);
+                len = readlink(proc_path, link_path, sizeof(link_path) - 1);
+                if (len > 0) {
+                    link_path[len] = '\0';
+                    fprintf(stderr, "[qemu] fd %d points to: %s\n", arg1, link_path);
+                    
+                    // 检查路径是否包含"qemu-open-fallback_dev_mtd"
+                    if (strstr(link_path, "qemu-open-fallback_dev_mtd") != NULL) {
+                        fprintf(stderr, "[qemu] Detected MTD device temporary file\n");
+                        /* Set character device properties for MTD device */
+                        memset(&st, 0, sizeof(st));
+                        st.st_mode = S_IFCHR | 0666;
+                        st.st_rdev = makedev(90, 0); /* MTD major device number */
+                        st.st_size = 0x1000000; /* 16MB */
+                        st.st_blksize = 4096;
+                        ret = 0;
+                    } else {
+                        ret = get_errno(fstat(arg1, &st));
+                    }
+                } else {
+                    ret = get_errno(fstat(arg1, &st));
+                }
+            } else {
+                ret = get_errno(fstat(arg1, &st));
+            }
 #if defined(TARGET_NR_stat) || defined(TARGET_NR_lstat)
         do_stat:
 #endif

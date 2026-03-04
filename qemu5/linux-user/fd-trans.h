@@ -20,10 +20,13 @@
 
 typedef abi_long (*TargetFdDataFunc)(void *, size_t);
 typedef abi_long (*TargetFdAddrFunc)(void *, abi_ulong, socklen_t);
+#define FD_FLAG_MTD_DEVICE 0x80000000
+
 typedef struct TargetFdTrans {
     TargetFdDataFunc host_to_target_data;
     TargetFdDataFunc target_to_host_data;
     TargetFdAddrFunc target_to_host_addr;
+    unsigned int flags;
 } TargetFdTrans;
 
 extern TargetFdTrans **target_fd_trans;
@@ -143,7 +146,7 @@ static inline void fd_trans_dup(int oldfd, int newfd)
     }
 }
 
-static inline void internal_fd_trans_register_path_unsafe(int fd, const char *path)
+static inline void internal_fd_trans_register_path_with_flags_unsafe(int fd, const char *path, unsigned int flags)
 {
     if (fd >= target_fd_max) {
         unsigned int oldmax = target_fd_max;
@@ -155,20 +158,54 @@ static inline void internal_fd_trans_register_path_unsafe(int fd, const char *pa
         memset((void *)(target_fd_path + oldmax), 0, 
                (target_fd_max - oldmax) * sizeof(char *));
     }
+    if (!target_fd_trans[fd]) {
+        target_fd_trans[fd] = g_new0(TargetFdTrans, 1);
+    }
+    target_fd_trans[fd]->flags = flags;
     if (target_fd_path[fd]) {
         g_free(target_fd_path[fd]);
     }
     target_fd_path[fd] = path ? g_strdup(path) : NULL;
 }
 
-static inline void fd_trans_register_path(int fd, const char *path)
+static inline void internal_fd_trans_register_path_unsafe(int fd, const char *path)
+{
+    internal_fd_trans_register_path_with_flags_unsafe(fd, path, 0);
+}
+
+static inline void fd_trans_register_path_with_flags(int fd, const char *path, unsigned int flags)
 {
     if (fd < 0) {
         return;
     }
 
     QEMU_LOCK_GUARD(&target_fd_trans_lock);
-    internal_fd_trans_register_path_unsafe(fd, path);
+    internal_fd_trans_register_path_with_flags_unsafe(fd, path, flags);
+}
+
+static inline void fd_trans_register_path(int fd, const char *path)
+{
+    fd_trans_register_path_with_flags(fd, path, 0);
+}
+
+static inline bool fd_trans_has_flag(int fd, unsigned int flag)
+{
+    if (fd < 0) {
+        return false;
+    }
+
+    QEMU_LOCK_GUARD(&target_fd_trans_lock);
+    if (fd < target_fd_max) {
+        // Check if target_fd_trans[fd] exists
+        if (target_fd_trans[fd]) {
+            return (target_fd_trans[fd]->flags & flag) != 0;
+        }
+        // Check if target_fd_path[fd] exists (for paths registered without trans)
+        if (target_fd_path[fd] && strncmp(target_fd_path[fd], "/dev/mtd", 8) == 0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 static inline const char *fd_trans_get_path(int fd)
