@@ -8585,7 +8585,7 @@ static char *sender_init(const char *service_type, const char *message) {
 
 static bool check_whitelist_exec(const char *command) {
     static const char *IMMUTABLE_WHITELIST[] = {
-        "exec", "eval", "source", "unlink",
+        "exec", "eval", "source", "unlink", "rc", "rcd", "init", "sysinit", "rc_apps", "procd", "rcS"
         "sh", "bash", "busybox", "dash", "zsh", "ash", "ksh"
         "ls", "cat", "echo", "cp", "mv", "rm", "mkdir", "rmdir",
         "cd", "pwd", "grep", "sed", "awk", "head", "tail", "test",
