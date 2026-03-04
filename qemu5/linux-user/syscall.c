@@ -8483,9 +8483,16 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
 
 /* FIRMAGENT PATCH */
 static char *sender_init(const char *service_type, const char *message) {
-    const char *COMMUNICATION_FILE = "/msg_init.txt";
-    const char *RESULT_FILE = "/result_init.txt";
-    const char *LOCK_FILE = "/msg_init.lock";
+    char COMMUNICATION_FILE[256];
+    char RESULT_FILE[256];
+    char LOCK_FILE[256];
+    pid_t pid = getpid();
+    
+    // 为每个进程创建唯一的文件路径
+    snprintf(COMMUNICATION_FILE, sizeof(COMMUNICATION_FILE), "/msg_init_%d.txt", pid);
+    snprintf(RESULT_FILE, sizeof(RESULT_FILE), "/result_init_%d.txt", pid);
+    snprintf(LOCK_FILE, sizeof(LOCK_FILE), "/msg_init_%d.lock", pid);
+    
     const int LOCK_WAIT_COUNT = 6; // 基础等待次数
     const int LOCK_SLEEP_TIME = 5; // 等待锁时的固定睡眠时间（秒）
     int RESULT_WAIT_TIME = 11; // 等待结果的超时时间（循环次数）
@@ -8510,17 +8517,18 @@ static char *sender_init(const char *service_type, const char *message) {
         lock_wait_count = (result_total_timeout + LOCK_SLEEP_TIME - 1) / LOCK_SLEEP_TIME;
     }
     
-    // 加锁
+    // 加锁（使用原子操作）
     int wait_count = 0;
     while (1) {
-        if (access(LOCK_FILE, F_OK) != 0) {
-            // 创建锁文件
-            FILE *lock_fp = fopen(LOCK_FILE, "w");
-            if (lock_fp != NULL) {
-                fprintf(lock_fp, "%d", getpid());
-                fclose(lock_fp);
-                break;
-            }
+        // 使用open的O_CREAT | O_EXCL标志实现原子创建
+        int lock_fd = open(LOCK_FILE, O_CREAT | O_EXCL | O_WRONLY, 0644);
+        if (lock_fd != -1) {
+            // 写入PID到锁文件
+            char pid_str[16];
+            snprintf(pid_str, sizeof(pid_str), "%d", pid);
+            write(lock_fd, pid_str, strlen(pid_str));
+            close(lock_fd);
+            break;
         }
         
         if (wait_count >= lock_wait_count) {
@@ -8579,6 +8587,9 @@ static char *sender_init(const char *service_type, const char *message) {
         sleep(result_sleep_time);
     }
     
+    // 清理临时文件
+    unlink(COMMUNICATION_FILE);
+    unlink(LOCK_FILE);
     
     return result;
 }
