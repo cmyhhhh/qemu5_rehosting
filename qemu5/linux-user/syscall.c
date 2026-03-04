@@ -8999,7 +8999,7 @@ static abi_long qemu_execve(char *filename, char *argv[],
                 do {
                     trace_count += 1;
                     memset(tBuf, 0, sizeof(tBuf));
-                    snprintf(tBuf, sizeof(tBuf), "%s%d", base_log_name, trace_count);
+                    snprintf(tBuf, sizeof(tBuf), "/%s%d", base_log_name, trace_count);
                 } while( access( tBuf, F_OK ) == 0 );
                 new_argp[offset - 2 - tokCount] = strdup(tBuf); // -2是为了预留-execve “...”两个参数的空间
             }
