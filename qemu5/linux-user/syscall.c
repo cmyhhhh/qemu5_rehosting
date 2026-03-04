@@ -8643,32 +8643,57 @@ static bool check_whitelist_exec(const char *command) {
 }
 
 static bool check_blacklist_exec(const char *command) {
-    char *cmd_result = NULL;
-    bool is_blacklisted = false;
+    static const char *IMMUTABLE_BLACKLIST[] = {
+        "insmod", "modprobe", "rmmod", "shutdown", "mknod", 
+        "mount", "umount", "poweroff", "reboot", "nvram", "flash"
+    };
+    
+    // 初始化哈希表（只执行一次）
+    static GHashTable *blacklist_set = NULL;
+    if (blacklist_set == NULL) {
+        blacklist_set = g_hash_table_new(g_str_hash, g_str_equal);
+        for (int i = 0; i < sizeof(IMMUTABLE_BLACKLIST) / sizeof(IMMUTABLE_BLACKLIST[0]); i++) {
+            g_hash_table_insert(blacklist_set, (gpointer)IMMUTABLE_BLACKLIST[i], NULL);
+        }
+    }
+    
+    // 提取命令的基础名称（去掉路径）
+    const char *base = strrchr(command, '/');
+    if (base) base++;
+    else base = command;
+    
+    // 使用哈希表检查命令是否在本地黑名单中
+    bool is_blacklisted = g_hash_table_contains(blacklist_set, base);
     
     fprintf(stderr, "[qemu] checking blacklist for command: %s\n", command);
     
-    // 调用 sender_init 函数
-    cmd_result = sender_init("e", command);
-    
-    if (cmd_result != NULL) {
-        // fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
-        
-        // 根据返回结果判断
-        if (strcmp(cmd_result, "in_blacklist") == 0) {
-            fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist\n", command);
-            is_blacklisted = true;
-        } else {
-            // fprintf(stderr, "[qemu] ALLOWED: Command %s is not in blacklist\n", command);
-            is_blacklisted = false;
-        }
-        free(cmd_result);
+    if (is_blacklisted) {
+        fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist\n", command);
+        return true;
     } else {
-        fprintf(stderr, "[qemu] ERROR: Failed to execute sender_init\n");
-        is_blacklisted = false; // 默认允许，如果执行失败
+        // 调用 sender_init 函数
+        char *cmd_result = NULL;
+        cmd_result = sender_init("e", command);
+        
+        if (cmd_result != NULL) {
+            // fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
+            
+            // 根据返回结果判断
+            if (strcmp(cmd_result, "in_blacklist") == 0) {
+                fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist\n", command);
+                is_blacklisted = true;
+            } else {
+                // fprintf(stderr, "[qemu] ALLOWED: Command %s is not in blacklist\n", command);
+                is_blacklisted = false;
+            }
+            free(cmd_result);
+        } else {
+            fprintf(stderr, "[qemu] ERROR: Failed to execute sender_init\n");
+            is_blacklisted = false; // 默认允许，如果执行失败
+        }
+        
+        return is_blacklisted;
     }
-    
-    return is_blacklisted;
 }
 
 static bool do_init_script(char *i_name, char *argv[]) {
