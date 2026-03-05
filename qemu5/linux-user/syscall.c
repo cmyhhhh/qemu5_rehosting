@@ -8482,117 +8482,6 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
 */
 
 /* FIRMAGENT PATCH */
-static char *sender_init(const char *service_type, const char *message) {
-    char COMMUNICATION_FILE[256];
-    char RESULT_FILE[256];
-    char LOCK_FILE[256];
-    pid_t pid = getpid();
-    
-    // 为每个进程创建唯一的文件路径
-    snprintf(COMMUNICATION_FILE, sizeof(COMMUNICATION_FILE), "/msg_init_%d.txt", pid);
-    snprintf(RESULT_FILE, sizeof(RESULT_FILE), "/result_init_%d.txt", pid);
-    snprintf(LOCK_FILE, sizeof(LOCK_FILE), "/msg_init_%d.lock", pid);
-    
-    const int LOCK_WAIT_COUNT = 6; // 基础等待次数
-    const int LOCK_SLEEP_TIME = 5; // 等待锁时的固定睡眠时间（秒）
-    int RESULT_WAIT_TIME = 11; // 等待结果的超时时间（循环次数）
-    int result_sleep_time = LOCK_SLEEP_TIME; // 默认每次等待5秒
-    
-    // 根据service_type设置不同的结果等待时间和间隔
-    if (strcmp(service_type, "e") == 0) {
-        RESULT_WAIT_TIME = 2; // 总超时时间：2 * 10 = 20秒
-    } else if (strcmp(service_type, "s") == 0) {
-        RESULT_WAIT_TIME = 25; // 循环次数
-        result_sleep_time = 4; // 每次等待5秒，总超时时间：25 * 4 = 100秒
-    }
-    
-    // 计算结果等待的总超时时间
-    int result_total_timeout = RESULT_WAIT_TIME * result_sleep_time;
-    // 计算基础锁等待的总超时时间
-    int base_lock_total_timeout = LOCK_WAIT_COUNT * LOCK_SLEEP_TIME;
-    
-    // 等待锁的时间取两者最大值
-    int lock_wait_count = LOCK_WAIT_COUNT;
-    if (result_total_timeout > base_lock_total_timeout) {
-        lock_wait_count = (result_total_timeout + LOCK_SLEEP_TIME - 1) / LOCK_SLEEP_TIME;
-    }
-    
-    // 加锁（使用原子操作）
-    int wait_count = 0;
-    while (1) {
-        // 使用open的O_CREAT | O_EXCL标志实现原子创建
-        int lock_fd = open(LOCK_FILE, O_CREAT | O_EXCL | O_WRONLY, 0644);
-        if (lock_fd != -1) {
-            // 写入PID到锁文件
-            char pid_str[16];
-            snprintf(pid_str, sizeof(pid_str), "%d", pid);
-            write(lock_fd, pid_str, strlen(pid_str));
-            close(lock_fd);
-            break;
-        }
-        
-        if (wait_count >= lock_wait_count) {
-            fprintf(stderr, "[qemu] ERROR: Lock acquisition timed out\n");
-            return strdup("lock_timeout");
-        }
-        
-        wait_count++;
-        sleep(LOCK_SLEEP_TIME);
-    }
-    
-    // 清理通信文件
-    unlink(COMMUNICATION_FILE);
-    
-    // 写入通信文件
-    FILE *comm_fp = fopen(COMMUNICATION_FILE, "w");
-    if (comm_fp == NULL) {
-        fprintf(stderr, "[qemu] ERROR: Failed to open communication file\n");
-        unlink(LOCK_FILE);
-        return NULL;
-    }
-    
-    fprintf(comm_fp, "%s;%s", service_type, message);
-    fclose(comm_fp);
-
-    // 清理锁文件
-    unlink(LOCK_FILE);
-    
-    // 等待结果
-    int wait_time = RESULT_WAIT_TIME;
-    char *result = NULL;
-    
-    // 根据service_type设置不同的结果等待间隔（已在函数开头设置）
-    while (1) {
-        if (access(RESULT_FILE, F_OK) == 0) {
-            // 读取结果文件
-            FILE *result_fp = fopen(RESULT_FILE, "r");
-            if (result_fp != NULL) {
-                char buffer[256];
-                if (fgets(buffer, sizeof(buffer), result_fp) != NULL) {
-                    buffer[strcspn(buffer, "\n")] = 0;
-                    result = strdup(buffer);
-                }
-                fclose(result_fp);
-            }
-            unlink(RESULT_FILE);
-            break;
-        }
-        
-        if (wait_time <= 0) {
-            result = strdup("timeout");
-            break;
-        }
-        
-        wait_time--;
-        sleep(result_sleep_time);
-    }
-    
-    // 清理临时文件
-    unlink(COMMUNICATION_FILE);
-    unlink(LOCK_FILE);
-    
-    return result;
-}
 
 static bool check_whitelist_exec(const char *command) {
     static const char *IMMUTABLE_WHITELIST[] = {
@@ -8676,38 +8565,10 @@ static bool check_blacklist_exec(const char *command) {
     // 使用哈希表检查命令是否在本地黑名单中
     bool is_blacklisted = g_hash_table_contains(blacklist_set, base);
     
-    fprintf(stderr, "[qemu] checking blacklist for command: %s\n", command);
-    
-    if (is_blacklisted) {
-        fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist\n", command);
-        return true;
-    } else {
-        // 调用 sender_init 函数
-        char *cmd_result = NULL;
-        cmd_result = sender_init("e", command);
-        
-        if (cmd_result != NULL) {
-            // fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
-            
-            // 根据返回结果判断
-            if (strcmp(cmd_result, "in_blacklist") == 0) {
-                fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist\n", command);
-                is_blacklisted = true;
-            } else {
-                // fprintf(stderr, "[qemu] ALLOWED: Command %s is not in blacklist\n", command);
-                is_blacklisted = false;
-            }
-            free(cmd_result);
-        } else {
-            fprintf(stderr, "[qemu] ERROR: Failed to execute sender_init\n");
-            is_blacklisted = false; // 默认允许，如果执行失败
-        }
-        
-        return is_blacklisted;
-    }
+    return is_blacklisted;
 }
 
-static bool do_init_script(char *i_name, char *argv[]) {
+static bool save_script_for_processing(char *i_name, char *argv[]) {
     // 对 sh/ash/busybox/dash/zsh 等 shell 做特殊处理
     const char *shell_names[] = {"sh", "bash", "busybox", "dash", "zsh", "ash", "ksh", NULL};
     char *base = strrchr(i_name, '/');
@@ -8750,11 +8611,16 @@ static bool do_init_script(char *i_name, char *argv[]) {
                 int wli = 0;
                 while (whitelist[wli]) {
                     if (strcasecmp(base_name, whitelist[wli++]) == 0) {
-                        char *cmd_result = sender_init("s", argv[argc]);
-                        if (cmd_result != NULL) {
-                            fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
-                            free(cmd_result);
+                        // 保存需要处理的脚本路径到本地文件
+                        pid_t pid = getpid();
+                        char script_file[256];
+                        snprintf(script_file, sizeof(script_file), "/msg_init_%d.txt", pid);
+                        FILE *fp = fopen(script_file, "w");
+                        if (fp != NULL) {
+                            fprintf(fp, "%s", argv[argc]);
+                            fclose(fp);
                         }
+                        fprintf(stderr, "[qemu] saved script to process: %s to msg path %s\n", argv[argc], script_file);
                         return true;
                     }
                 }
@@ -8770,12 +8636,16 @@ static bool do_init_script(char *i_name, char *argv[]) {
                         strcmp(ext, ".ksh") == 0) {
                         is_shell_script = true;
                         fprintf(stderr, "[qemu] checking Shell script file (ext %s)\n", ext);
-                        // 把脚本内容给大模型进行筛选
-                        char *cmd_result = sender_init("s", argv[argc]);
-                        if (cmd_result != NULL) {
-                            fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
-                            free(cmd_result);
+                        // 保存需要处理的脚本路径到本地文件
+                        pid_t pid = getpid();
+                        char script_file[256];
+                        snprintf(script_file, sizeof(script_file), "/msg_init_%d.txt", pid);
+                        FILE *fp = fopen(script_file, "w");
+                        if (fp != NULL) {
+                            fprintf(fp, "%s", argv[argc]);
+                            fclose(fp);
                         }
+                        fprintf(stderr, "[qemu] saved script with extension to process: %s to %s\n", argv[argc], script_file);
                         return true;
                     }
                 }
@@ -8799,12 +8669,17 @@ static bool do_init_script(char *i_name, char *argv[]) {
                                 strstr(first_line, "ash") != NULL ||
                                 strstr(first_line, "ksh") != NULL) {
                                 fprintf(stderr, "[qemu] checking Shell script file (shebang)\n");
-                                // 把脚本内容给大模型进行筛选
-                                char *cmd_result = sender_init("s", argv[argc]);
-                                if (cmd_result != NULL) {
-                                    fprintf(stderr, "[qemu] sender_init returned: %s\n", cmd_result);
-                                    free(cmd_result);
+                                // 保存需要处理的脚本路径到本地文件
+                                pid_t pid = getpid();
+                                char script_file[256];
+                                snprintf(script_file, sizeof(script_file), "/msg_init_%d.txt", pid);
+                                FILE *fp = fopen(script_file, "w");
+                                if (fp != NULL) {
+                                    fprintf(fp, "%s", argv[argc]);
+                                    fclose(fp);
                                 }
+                                fprintf(stderr, "[qemu] saved script with shebang to process: %s to %s\n", argv[argc], script_file);
+                                fclose(script_fp);
                                 return true;
                             }
                         }
@@ -8937,13 +8812,13 @@ static abi_long qemu_execve(char *filename, char *argv[],
         new_argp[2] = argv[0];
     }
 
-    // 如果命令在白名单中则直接执行
+    // 只检查黑名单，不检查白名单
     if(use_llm){
-        if(!do_init_script(new_argp[2], argv) && !check_whitelist_exec(new_argp[2])){
+        if(!save_script_for_processing(new_argp[2], argv)){
             // 检查是否为黑名单里面的命令，如果是，则不执行，直接返回
             if(check_blacklist_exec(new_argp[2])){
                 // // 命令在黑名单中，正常退出
-                // fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
+                fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
                 exit(0); // 正常退出
             }
         }
@@ -10956,7 +10831,7 @@ static abi_long do_syscall1(void *cpu_env, int num, abi_long arg1,
     case TARGET_NR_fstat:
         {
             /* Check if it's an MTD device */
-            fprintf(stderr, "[qemu] fstat called for fd: %d\n", arg1);
+            // fprintf(stderr, "[qemu] fstat called for fd: %d\n", arg1);
             
             // 直接检查文件描述符是否是MTD设备
             // 我们知道MTD设备的临时文件大小是16MB
