@@ -8483,69 +8483,70 @@ static int host_to_target_cpu_mask(const unsigned long *host_mask,
 
 /* FIRMAGENT PATCH */
 
-static bool check_whitelist_exec(const char *command) {
-    static const char *IMMUTABLE_WHITELIST[] = {
-        "exec", "eval", "source", "unlink", "rc", "rcd", "init", "sysinit", "rc_apps", "procd", "rcS"
-        "sh", "bash", "busybox", "dash", "zsh", "ash", "ksh"
-        "ls", "cat", "echo", "cp", "mv", "rm", "mkdir", "rmdir",
-        "cd", "pwd", "grep", "sed", "awk", "head", "tail", "test",
-        "ps", "top", "kill", "chmod", "chown", "chgrp", "expr",
-        "touch", "ln", "find", "xargs", "cut", "sort", "uniq",
-        "wc", "diff", "patch", "tar", "gzip", "gunzip", "zip", "unzip",
-        "date", "time", "sleep", "true", "false", "exit", "[", "[[",
-        "ifconfig", "ip", "route", "ping", "traceroute", "netstat", "arp", "iptables",
-        "telnet", "ssh", "scp", "iwconfig", "iw", "wget", "curl", "nslookup", "dig", "ss", "tc",
-        "ifup", "ifdown", "vconfig", "bridge", "iproute", "netcat", "nc", "tftp", "ftp",
-        "df", "du", "free", "uptime", "uname", "hostname",
-        "nice", "renice", "sysctl", "passwd", "chpasswd", "sysinfo",
-        "fsck", "mkfs", "mke2fs", "mountpoint", "dd", "cpio", "mksquashfs", "unsquashfs", "mkfs.ext3", "mkfs.ext4",
-        "killall", "pgrep", "pkill", "pidof", "nohup", "bg", "fg", "jobs",
-        "vi", "vim", "nano", "ed", "emacs", "less", "more",
-        "opkg", "ipkg", "pkg_add", "pkg_info",
-        "uci", "nmcli", "networkctl", "brctl",
-        "htop", "mpstat", "vmstat", "iostat", "sar", "lsof", "tcpdump",
-        "openssl", "md5sum", "sha1sum", "sha256sum", "sha512sum",
-        "ntpdate", "chronyd", "ntpd", "rdate", "busybox",
-        "xz", "bzip2", "lbzip2", "lzma", "lzip", "zstd",
-        "clear", "history", "which", "whereis", "whoami", "id", "su", "sudo", "reset", "tty",
-        "od", "hexdump", "xxd", "stat", "file", "lshw", "lscpu", "sync", "mdadm", "ntfs-3g",
-        "httpd", "uhttpd", "lighttpd", "jjhttpd", "shttpd", "thttpd", "minihttpd", "mini_httpd",
-        "mini_httpds", "dhttpd", "alphapd", "goahead", "boa", "appweb", "shgw_httpd",
-        "tenda_httpd", "funjsq_httpd", "webs", "hunt_server", "hydra",
-        "miniupnpd", "miniupnpc", "mini_upnpd", "miniupnpd_ap", "miniupnpd_wsc",
-        "upnp", "upnpc", "upnpd", "upnpc-static", "upnprenderer",
-        "bcmupnp", "wscupnpd", "upnp_app", "upnp_igd", "upnp_tv_devices",
-        "ddnsd", "dnsmasq", "udhcpd", "dnsmasq"
-    };
+// static bool check_whitelist_exec(const char *command) {
+//     static const char *IMMUTABLE_WHITELIST[] = {
+//         "exec", "eval", "source", "unlink", "rc", "rcd", "init", "sysinit", "rc_apps", "procd", "rcS",
+//         "sh", "bash", "busybox", "dash", "zsh", "ash", "ksh",
+//         "ls", "cat", "echo", "cp", "mv", "rm", "mkdir", "rmdir",
+//         "cd", "pwd", "grep", "sed", "awk", "head", "tail", "test",
+//         "ps", "top", "kill", "chmod", "chown", "chgrp", "expr",
+//         "touch", "ln", "find", "xargs", "cut", "sort", "uniq",
+//         "wc", "diff", "patch", "tar", "gzip", "gunzip", "zip", "unzip",
+//         "date", "time", "sleep", "true", "false", "exit", "[", "[[",
+//         "ifconfig", "ip", "route", "ping", "traceroute", "netstat", "arp", "iptables",
+//         "telnet", "ssh", "scp", "iwconfig", "iw", "wget", "curl", "nslookup", "dig", "ss", "tc",
+//         "ifup", "ifdown", "vconfig", "bridge", "iproute", "netcat", "nc", "tftp", "ftp",
+//         "df", "du", "free", "uptime", "uname", "hostname",
+//         "nice", "renice", "sysctl", "passwd", "chpasswd", "sysinfo",
+//         "fsck", "mkfs", "mke2fs", "mountpoint", "dd", "cpio", "mksquashfs", "unsquashfs", "mkfs.ext3", "mkfs.ext4",
+//         "killall", "pgrep", "pkill", "pidof", "nohup", "bg", "fg", "jobs",
+//         "vi", "vim", "nano", "ed", "emacs", "less", "more",
+//         "opkg", "ipkg", "pkg_add", "pkg_info",
+//         "uci", "nmcli", "networkctl", "brctl",
+//         "htop", "mpstat", "vmstat", "iostat", "sar", "lsof", "tcpdump",
+//         "openssl", "md5sum", "sha1sum", "sha256sum", "sha512sum",
+//         "ntpdate", "chronyd", "ntpd", "rdate", "busybox",
+//         "xz", "bzip2", "lbzip2", "lzma", "lzip", "zstd",
+//         "clear", "history", "which", "whereis", "whoami", "id", "su", "sudo", "reset", "tty",
+//         "od", "hexdump", "xxd", "stat", "file", "lshw", "lscpu", "sync", "mdadm", "ntfs-3g",
+//         "httpd", "uhttpd", "lighttpd", "jjhttpd", "shttpd", "thttpd", "minihttpd", "mini_httpd",
+//         "mini_httpds", "dhttpd", "alphapd", "goahead", "boa", "appweb", "shgw_httpd",
+//         "tenda_httpd", "funjsq_httpd", "webs", "hunt_server", "hydra",
+//         "miniupnpd", "miniupnpc", "mini_upnpd", "miniupnpd_ap", "miniupnpd_wsc",
+//         "upnp", "upnpc", "upnpd", "upnpc-static", "upnprenderer",
+//         "bcmupnp", "wscupnpd", "upnp_app", "upnp_igd", "upnp_tv_devices",
+//         "ddnsd", "dnsmasq", "udhcpd", "dnsmasq"
+//     };
     
-    // 初始化哈希表（只执行一次）
-    static GHashTable *whitelist_set = NULL;
-    if (whitelist_set == NULL) {
-        whitelist_set = g_hash_table_new(g_str_hash, g_str_equal);
-        for (int i = 0; i < sizeof(IMMUTABLE_WHITELIST) / sizeof(IMMUTABLE_WHITELIST[0]); i++) {
-            g_hash_table_insert(whitelist_set, (gpointer)IMMUTABLE_WHITELIST[i], NULL);
-        }
-    }
+//     // 初始化哈希表（只执行一次）
+//     static GHashTable *whitelist_set = NULL;
+//     if (whitelist_set == NULL) {
+//         whitelist_set = g_hash_table_new(g_str_hash, g_str_equal);
+//         for (int i = 0; i < sizeof(IMMUTABLE_WHITELIST) / sizeof(IMMUTABLE_WHITELIST[0]); i++) {
+//             g_hash_table_insert(whitelist_set, (gpointer)IMMUTABLE_WHITELIST[i], NULL);
+//         }
+//     }
     
-    // 提取命令的基础名称（去掉路径）
-    const char *base = strrchr(command, '/');
-    if (base) base++;
-    else base = command;
+//     // 提取命令的基础名称（去掉路径）
+//     const char *base = strrchr(command, '/');
+//     if (base) base++;
+//     else base = command;
     
-    // 使用哈希表检查命令是否在白名单中
-    bool is_whitelisted = g_hash_table_contains(whitelist_set, base);
+//     // 使用哈希表检查命令是否在白名单中
+//     bool is_whitelisted = g_hash_table_contains(whitelist_set, base);
     
-    if (is_whitelisted) {
-        return true;
-    }
+//     if (is_whitelisted) {
+//         return true;
+//     }
     
-    return false;
-}
+//     return false;
+// }
 
 static bool check_blacklist_exec(const char *command) {
     static const char *IMMUTABLE_BLACKLIST[] = {
-        "insmod", "modprobe", "rmmod", "shutdown", "mknod", 
-        "mount", "umount", "poweroff", "reboot", "nvram", "flash"
+        "insmod", "modprobe", "rmmod", "shutdown", "mknod", "led_app",
+        "mount", "umount", "poweroff", "reboot", "nvram", "flash", "watchdog",
+        "hotplug2", "reload", "hotplug"
     };
     
     // 初始化哈希表（只执行一次）
@@ -8668,7 +8669,7 @@ static bool save_script_for_processing(char *i_name, char *argv[]) {
                                 strstr(first_line, "zsh") != NULL ||
                                 strstr(first_line, "ash") != NULL ||
                                 strstr(first_line, "ksh") != NULL) {
-                                fprintf(stderr, "[qemu] checking Shell script file (shebang)\n");
+                                // fprintf(stderr, "[qemu] checking Shell script file (shebang)\n");
                                 // 保存需要处理的脚本路径到本地文件
                                 pid_t pid = getpid();
                                 char script_file[256];
@@ -8791,6 +8792,7 @@ static abi_long qemu_execve(char *filename, char *argv[],
         tokCount += 1;
     }
     offset += 2 + tokCount; // 加上-execve需要的offset
+    free(qemu_path_tokens); // 释放临时内存
 
     // fprintf(stderr, "offset %d argc %d tokCount %d\n", offset, argc, tokCount);
     // fprintf(stderr, "Original args\n");
@@ -8817,9 +8819,9 @@ static abi_long qemu_execve(char *filename, char *argv[],
         if(!save_script_for_processing(new_argp[2], argv)){
             // 检查是否为黑名单里面的命令，如果是，则不执行，直接返回
             if(check_blacklist_exec(new_argp[2])){
-                // // 命令在黑名单中，正常退出
-                fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, exiting normally\n", new_argp[2]);
-                exit(0); // 正常退出
+                // // 命令在黑名单中，返回执行成功
+                fprintf(stderr, "[qemu] BLOCKED: Command %s is in blacklist, returning success\n", new_argp[2]);
+                return 0; // 返回执行成功
             }
         }
     }
@@ -8828,13 +8830,13 @@ static abi_long qemu_execve(char *filename, char *argv[],
     token = strtok(qemu_path_tokens, " ");
     while (tokCount > 0 && token != NULL) { // 处理-execve后面跟着的参数
         token = strtok(NULL, " ");
-        if(strstr(token, "trace.log") != NULL) { // 查看trace.logX是否被使用，每个execve都会在之前X基础上+1
-            // 基础Linux命令黑名单，不需要产生日志
+        if(token != NULL && strstr(token, "trace.log") != NULL) { // 查看trace.logX是否被使用，每个execve都会在之前X基础上+1
+            // 基础Linux命令不需要产生日志
             static const char *blacklist[] = {
-                "bash", "sh", "dash", "zsh", "csh",
+                "bash", "sh", "dash", "zsh", "csh", "syslogd",
                 "ls", "cat", "echo", "cp", "mv", "rm", "mkdir", "rmdir",
-                "cd", "pwd", "grep", "sed", "awk", "head", "tail", "test"
-                "ps", "top", "kill", "chmod", "chown", "chgrp", "expr"
+                "cd", "pwd", "grep", "sed", "awk", "head", "tail", "test",
+                "ps", "top", "kill", "chmod", "chown", "chgrp", "expr",
                 "touch", "ln", "find", "xargs", "cut", "sort", "uniq",
                 "wc", "diff", "patch", "tar", "gzip", "gunzip", "zip", "unzip",
                 "date", "time", "sleep", "true", "false", "exit", "[", "[[",
@@ -8914,11 +8916,20 @@ static abi_long qemu_execve(char *filename, char *argv[],
                 char base_log_name[200];
                 snprintf(base_log_name, sizeof(base_log_name), "%s_trace.log", sanitized_app_name);
                 
+                // 添加循环次数限制，防止无限循环
+                int max_attempts = 200;
+                int attempt = 0;
                 do {
                     trace_count += 1;
+                    attempt += 1;
                     memset(tBuf, 0, sizeof(tBuf));
                     snprintf(tBuf, sizeof(tBuf), "/%s%d", base_log_name, trace_count);
-                } while( access( tBuf, F_OK ) == 0 );
+                } while( access( tBuf, F_OK ) == 0 && attempt < max_attempts );
+                
+                // 如果达到最大尝试次数，使用当前文件名
+                if (attempt >= max_attempts) {
+                    fprintf(stderr, "[qemu] Warning: Reached max attempts for log file creation, using existing filename\n");
+                }
                 new_argp[offset - 2 - tokCount] = strdup(tBuf); // -2是为了预留-execve “...”两个参数的空间
             }
         }
@@ -8927,6 +8938,7 @@ static abi_long qemu_execve(char *filename, char *argv[],
         }
         tokCount -= 1;
     }
+    free(qemu_path_tokens); // 释放临时内存
 
     new_argp[offset - 2] = strdup("-execve");
     new_argp[offset - 1] = strdup(qemu_execve_path);
